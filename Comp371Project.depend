@@ -1,0 +1,330 @@
+# depslib dependency file v1.0
+1321220220 source:/home/angela/Documents/Comp371Project/Eight.cpp
+	"Eight.h"
+
+1321138138 /home/angela/Documents/Comp371Project/Eight.h
+	"Sprite.h"
+
+1320635917 /home/angela/Documents/Comp371Project/Sprite.h
+	<GL/glut.h>
+	"SOIL/SOIL.h"
+	<iostream>
+	<ctype.h>
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+
+1295411577 /usr/include/GL/glut.h
+	"freeglut_std.h"
+
+1295411577 /usr/include/GL/freeglut_std.h
+	<Windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1312964831 /usr/include/GL/gl.h
+	"gl_mangle.h"
+	<stdlib.h>
+	<windows.h>
+	<GL/mesa_wgl.h>
+	<GL/glext.h>
+
+1312964831 /usr/include/GL/gl_mangle.h
+
+1317765333 /usr/include/stdlib.h
+	<features.h>
+	<stddef.h>
+	<bits/waitflags.h>
+	<bits/waitstatus.h>
+	<xlocale.h>
+	<sys/types.h>
+	<alloca.h>
+	<bits/stdlib.h>
+	<bits/stdlib-ldbl.h>
+
+1317765287 /usr/include/features.h
+	<bits/predefs.h>
+	<sys/cdefs.h>
+	<gnu/stubs.h>
+
+1317765292 /usr/include/xlocale.h
+
+1317765333 /usr/include/alloca.h
+	<features.h>
+	<stddef.h>
+
+1312964831 /usr/include/GL/glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1317765333 /usr/include/inttypes.h
+	<features.h>
+	<stdint.h>
+	<stddef.h>
+
+1317765333 /usr/include/stdint.h
+	<features.h>
+	<bits/wchar.h>
+	<bits/wordsize.h>
+
+1312964820 /usr/include/GL/glu.h
+	"glu_mangle.h"
+	<GL/gl.h>
+
+1312964820 /usr/include/GL/glu_mangle.h
+
+1215447208 /usr/include/SOIL/SOIL.h
+
+1317765320 /usr/include/ctype.h
+	<features.h>
+	<bits/types.h>
+	<endian.h>
+	<xlocale.h>
+
+1317765344 /usr/include/endian.h
+	<features.h>
+	<bits/endian.h>
+	<bits/byteswap.h>
+
+1317765326 /usr/include/math.h
+	<features.h>
+	<bits/huge_val.h>
+	<bits/huge_valf.h>
+	<bits/huge_vall.h>
+	<bits/inf.h>
+	<bits/nan.h>
+	<bits/mathdef.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls.h>
+	<bits/mathcalls.h>
+	<bits/mathinline.h>
+
+1317765338 /usr/include/stdio.h
+	<features.h>
+	<stddef.h>
+	<bits/types.h>
+	<libio.h>
+	<stdarg.h>
+	<bits/stdio_lim.h>
+	<bits/sys_errlist.h>
+	<getopt.h>
+	<bits/stdio.h>
+	<bits/stdio2.h>
+	<bits/stdio-ldbl.h>
+
+1317765338 /usr/include/libio.h
+	<_G_config.h>
+	<stdarg.h>
+	<sys/cdefs.h>
+	<bits/stdio-lock.h>
+	<shlib-compat.h>
+	<bits/libio-ldbl.h>
+
+1317765338 /usr/include/_G_config.h
+	<bits/types.h>
+	<stddef.h>
+	<wchar.h>
+	<gconv.h>
+
+1317765346 /usr/include/wchar.h
+	<features.h>
+	<stdio.h>
+	<stdarg.h>
+	<bits/wchar.h>
+	<stddef.h>
+	<wctype.h>
+	<xlocale.h>
+	<xlocale.h>
+	<xlocale.h>
+	<wctype.h>
+	<bits/wchar2.h>
+	<bits/wchar-ldbl.h>
+
+1317765370 /usr/include/wctype.h
+	<features.h>
+	<bits/types.h>
+	<wchar.h>
+	<endian.h>
+	<xlocale.h>
+
+1317765289 /usr/include/gconv.h
+	<features.h>
+	<wchar.h>
+	<stddef.h>
+
+1317765356 /usr/include/getopt.h
+	<ctype.h>
+
+1321237601 source:/home/angela/Documents/Comp371Project/EventListener.cpp
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+	<GL/glut.h>
+	<iostream>
+	<ctype.h>
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+	"glFrame.h"
+	"EventListener.h"
+	"Map.h"
+
+1174767838 /home/angela/Documents/Comp371Project/glFrame.h
+	"math3d.h"
+
+1176928268 /home/angela/Documents/Comp371Project/math3d.h
+	<math.h>
+	<memory.h>
+
+1317765344 /usr/include/memory.h
+	<features.h>
+	<string.h>
+
+1317765343 /usr/include/string.h
+	<features.h>
+	<stddef.h>
+	<xlocale.h>
+	<bits/string.h>
+	<bits/string2.h>
+	<bits/string3.h>
+
+1321213644 /home/angela/Documents/Comp371Project/EventListener.h
+	<GL/glut.h>
+	"glFrame.h"
+	"Map.h"
+
+1321230181 /home/angela/Documents/Comp371Project/Map.h
+	<GL/glut.h>
+	"Pellet.h"
+	"Pacman.h"
+	"Eight.h"
+	"Tile.h"
+	"Ghost.h"
+	"StreetLamp.h"
+	"Wall.h"
+	"glFrame.h"
+
+1321208870 /home/angela/Documents/Comp371Project/Pellet.h
+	<GL/glut.h>
+	"Sprite.h"
+
+1321193245 /home/angela/Documents/Comp371Project/Pacman.h
+	"Sprite.h"
+	"Eight.h"
+
+1321138138 /home/angela/Documents/Comp371Project/Tile.h
+	"Sprite.h"
+	"Eight.h"
+
+1321155003 /home/angela/Documents/Comp371Project/Ghost.h
+	"Sprite.h"
+
+1321214482 /home/angela/Documents/Comp371Project/StreetLamp.h
+	"Sprite.h"
+
+1321224927 /home/angela/Documents/Comp371Project/Wall.h
+	"Sprite.h"
+
+1321238311 source:/home/angela/Documents/Comp371Project/Ghost.cpp
+	"Ghost.h"
+
+1321238344 source:/home/angela/Documents/Comp371Project/Map.cpp
+	"Map.h"
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+
+1321230357 source:/home/angela/Documents/Comp371Project/Pacman.cpp
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+	<GL/glut.h>
+	<iostream>
+	<ctype.h>
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+	"glFrame.h"
+	"Pacman.h"
+	"Eight.h"
+
+1321220386 source:/home/angela/Documents/Comp371Project/Pellet.cpp
+	"Pellet.h"
+
+1320635854 source:/home/angela/Documents/Comp371Project/Sprite.cpp
+	"Sprite.h"
+
+1321232767 source:/home/angela/Documents/Comp371Project/StreetLamp.cpp
+	"StreetLamp.h"
+
+1321232670 source:/home/angela/Documents/Comp371Project/Tile.cpp
+	"Tile.h"
+
+1321218352 source:/home/angela/Documents/Comp371Project/main.cpp
+	<GL/glut.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	"SOIL/SOIL.h"
+	"EventListener.h"
+
+1317765356 /usr/include/unistd.h
+	<features.h>
+	<bits/posix_opt.h>
+	<bits/environments.h>
+	<bits/types.h>
+	<stddef.h>
+	<bits/confname.h>
+	<getopt.h>
+	<bits/unistd.h>
+
+1321232001 source:/home/angela/Documents/Comp371Project/Wall.cpp
+	"Wall.h"
+	<cstdlib>
+	<math.h>
+	<iostream>
+	<fstream>
+	<string>
+	<iomanip>
+	<stdio.h>
+	"strstream"
+

@@ -1,0 +1,12 @@
+Comp 371 - Computer Graphics || OpenGL
+Nov 13, 2011
+Programming Assignment 3
+
+Team 8
+Submitted by Angela Gabereau
+
+Meets most requirements.
+
+Does not include the camera control from PA2.  I have refactored the code base and I did not have enough time to reintegrate the camera controls.  My apologies.  It is next on the todo list.
+
+
