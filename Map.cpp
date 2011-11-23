@@ -32,7 +32,7 @@ Map::Map()
     this->initTiles();
     this->initGhosts();
 
-    this->pacman = new Pacman(27.0f,1.1f,27.0f);
+    this->pacman = new Pacman(2.0f,1.1f,2.0f);
 
     //Draw lights
     /*   this->streetLights[0] = new StreetLamp(GL_LIGHT1,0.0,4.0,0.0,4.0,0.0,4.0); //back left
@@ -68,18 +68,20 @@ void Map::draw()
         glEnable( GL_TEXTURE_2D );
     this->pacman->draw();
     this->drawTiles();
-    this->drawStreetLights();
+//   this->drawStreetLights();
 
-    this->drawGhosts();
+    //  this->drawGhosts();
 
-    this->drawPellets();
-    this->drawWalls();
+    //  this->drawPellets();
+     this->drawWalls();
 }
 
-void Map::streetLightSwitch(GLint lightIndex){
+void Map::streetLightSwitch(GLint lightIndex)
+{
     this->streetLights[lightIndex]->lightSwitch();
 }
-void Map::masterStreetLightSwitch(){
+void Map::masterStreetLightSwitch()
+{
     this->masterStreetLightState = !this->masterStreetLightState;
     for(GLint i=0; i<4; i++)
     {
@@ -142,7 +144,7 @@ void Map::drawAxis()
     glVertex3f(0, 0, 0);
     glVertex3f(0, 10, 0);
     // Z axis
-    glColor3f(0, 0, 1); //Green
+    glColor3f(0, 0, 1); //Gree
     glVertex3f(0, 0, 0);
     glVertex3f(0, 0, 10);
     glEnd();
@@ -275,6 +277,11 @@ char* Map::tr(char x) 	// Transforms Every char into a binary number.
 {
 // Every '1' corresponds to a wall, considering
 // every char is a labyrinth's unit square.
+// 1000 = east wall
+// 0100 = north
+// 0010 = west
+// 0001 = south
+
     char* res;
     switch(x)
     {
@@ -339,7 +346,13 @@ void Map::readstr(FILE *f,char *string)		// Read char from the file
     while ((string[0] == '/') || (string[0] == '\n'));
     return;
 }
+char* Map::whereIsHe(){
 
+    float x = this->pacman->getX();
+    float z = this->pacman->getZ();
+
+    return this->walls[(int)x/2][(int)z/2]->getType();
+}
 
 void Map::createMaze()
 {
@@ -355,7 +368,7 @@ void Map::createMaze()
             for (int j = 0; j < 28; j++)
             {
                 char* wallCode = tr(s[j]);
-              //  cout<<wallCode<<"MM"<<i<<":"<<j<<endl;
+                //  cout<<wallCode<<"MM"<<i<<":"<<j<<endl;
                 this->walls[i][j] = new Wall(i*2.0f,0.5f,j*2.0f, wallCode);
             }
             i++;
@@ -371,16 +384,16 @@ void Map::createMaze()
 
 void Map::drawWalls()
 {
-	glPushMatrix();
-   // glTranslatef(17.5f,0.5f,8.9f);
-	for (int i = 0; i < 28; i++)		// Draw Walls For Every Square Unit
-	{
-		for (int j = 0; j < 28; j++)
-		{
-			this->walls[i][j]->draw();
-			//this->walls[0][0]->draw();
-		}
-	}
+    glPushMatrix();
+    // glTranslatef(17.5f,0.5f,8.9f);
+    for (int i = 0; i < 28; i++)		// Draw Walls For Every Square Unit
+    {
+        for (int j = 0; j < 28; j++)
+        {
+            this->walls[i][j]->draw();
+            //this->walls[0][0]->draw();
+        }
+    }
     glPopMatrix();
 
 }

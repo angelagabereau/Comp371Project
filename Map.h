@@ -29,6 +29,7 @@ public:
     void switchAllTexture();
     void streetLightSwitch(GLint lightIndex);
     void masterStreetLightSwitch();
+    char* whereIsHe();
     Pacman *pacman;
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);

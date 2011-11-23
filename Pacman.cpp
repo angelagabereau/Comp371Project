@@ -1,16 +1,5 @@
 #include <cstdlib>
-#include <math.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <iomanip>
-#include <stdio.h>
-#include "strstream"
-
-#include <GL/glut.h>
-#include <iostream>
 #include <ctype.h>
-#include <cstdlib>
 #include <math.h>
 #include <iostream>
 #include <fstream>
@@ -18,7 +7,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include "strstream"
-
+#include <GL/glut.h>
 
 using std::strstreambuf;
 using std::istrstream;
@@ -35,17 +24,112 @@ using namespace std;
 
 Pacman::Pacman( GLfloat xPos,GLfloat yPos,GLfloat zPos): Sprite()
 {
-    x=xPos;
-    y=yPos;
-    z=zPos;
+    this->x=xPos;
+    this->y=yPos;
+    this->z=zPos;
+    this->rotation=0.0;
     this->loadTexture();
     this->eight = new Eight(0.0f,0.3f,-2.0f);
+    this->worldsEdgeX = 28*2;
+    this->worldsEdgeZ = 28*2;
 }
 
 Pacman::~Pacman()
 {
     //dtor
 }
+void Pacman::turnLeft()
+{
+    this->rotation=this->rotation+90;
+    if(this->rotation==360)//scale back factor.
+        this->rotation=0;
+}
+void Pacman::turnRight()
+{
+    //If the roation is zero then set the rotation to 360 and subtract.
+    //This keeps the rotation value [0,360] and is used to calculate direction of movement.
+    if(this->rotation==0)
+        this->rotation=360;
+    this->rotation=this->rotation-90;
+}
+void Pacman::walkForward(char* walls)
+{
+
+    bool onTileX = round(this->x) == this->x && (round(this->x)  % 2 != 0);
+    bool onTileZ = round(this->z) == this->z && (round(this->z)  % 2 != 0);
+
+    cout<<"pacman x"<<this->x<<" on x: "<<onTileX<<endl;
+    cout<<"pacman z"<<this->z<<" on z: "<<onTileZ<<endl;
+
+
+
+    //First check which direction pacman is facing by checking pacman's rotation
+    //Then check if pacman is on a tile or on an edge.  x and z are whole numbers on tile edges and a float with .5 on the tile.
+    //Then check if there is a wall in front of pacman.  This is determined by the char in walls cooresponding to pacman's direction.
+
+    if(this->rotation == 0  && z<this->worldsEdgeZ) // facing south, make sure there is no wall
+    {
+        if((onTileZ && walls[3]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
+            this->z+=0.5;
+    }
+    else if(this->rotation == 90 && x>0)  // facing west
+    {
+        if((onTileX && walls[2]=='0') || !onTileX)//If we are on a tile, check there is no wall.
+            this->x-=0.5;
+    }
+    else if(this->rotation == 180 && z>0)  //facing north
+    {
+        if((onTileZ && walls[1]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
+            this->z-=0.5;
+    }
+    else if(this->rotation == 270 && x<this->worldsEdgeX)  //facing east
+    {
+        if((onTileX && walls[0]=='0') || !onTileX)//If we are on a tile, check there is no wall.
+            this->x+=0.5;
+    }
+    else
+    {
+        cout << "Keep turning, you can only move forward at noon, 3, 6 and 9." << endl;
+    }
+}
+
+void Pacman::walkBackward(char* walls)
+{
+
+    bool onTileX = round(this->x) == this->x && (round(this->x)  % 2 != 0);
+    bool onTileZ = round(this->z) == this->z && (round(this->z)  % 2 != 0);
+
+    cout<<"pacman x"<<this->x<<" on x: "<<onTileX<<endl;
+    cout<<"pacman z"<<this->z<<" on z: "<<onTileZ<<endl;
+
+    if(this->rotation == 0 && z>0) // facing south  //Check world boundary. Do not move beyond.
+    {
+        if((onTileZ && walls[1]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
+            this->z-=0.5;
+    }
+    else if(this->rotation == 90 && x<this->worldsEdgeX)  // facing west
+    {
+        if((onTileX && walls[0]=='0') || !onTileX)//If we are on a tile, check there is no wall.
+            this->x+=0.5;
+    }
+    else if(this->rotation == 180 && z<this->worldsEdgeZ)  //facing north
+    {
+        if((onTileZ && walls[3]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
+            this->z+=0.5;
+    }
+    else if(this->rotation == 270 && x>0)  //facing east
+    {
+        if((onTileX && walls[2]=='0') || !onTileX)//If we are on a tile, check there is no wall.
+            this->x-=0.5;
+
+    }
+    else
+    {
+        cout << "Keep turning, you can only move forward at noon, 3, 6 and 9." << endl;
+    }
+
+}
+
 
 int Pacman::loadTexture()
 {
@@ -134,8 +218,11 @@ void Pacman::draw()
     const GLfloat polished[] = { 100.0 };
 
     glPushMatrix();
+
     move();
-    glColor3f(1.0f,1.0f,1.0f);
+    glRotatef(this->rotation, 0.0f, 1.0f, 0.0f);
+    //cout << this->rotation << endl;
+    // glColor3f(1.0f,1.0f,1.0f);
 
     glPushMatrix(); //Top
     drawHalf(r);
@@ -169,4 +256,21 @@ void Pacman::draw()
 
 }
 
+GLfloat Pacman::getX()
+{
+
+    return this->x;
+}
+
+GLfloat Pacman::getY()
+{
+
+    return this->y;
+}
+
+GLfloat Pacman::getZ()
+{
+
+    return this->z;
+}
 

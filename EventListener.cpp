@@ -63,9 +63,9 @@ void EventListener::drawScene()
     glLoadIdentity();				// Reset The View
 
 //  glTranslatef(0.0f,-2.0f,-10.0f);
-    glTranslatef(-28.0f,20.0f,-80.0f);
+    glTranslatef(-0.0f,0.0f,-20.0f);
     //
-    glRotatef(45.0,1.0, 0.0,0.0);
+    glRotatef(90.0,1.0, 0.0,0.0);
     this->map->drawAxis();
     this->map->draw();
 
@@ -141,6 +141,33 @@ void EventListener::help ()
 
 void EventListener::specialKeys(GLint key, GLint x, GLint y)
 {
+    if(key == GLUT_KEY_UP)
+    {
+     //   cout << "up " << endl;
+     char* whereHeIs = this->map->whereIsHe();
+        //  cout<<whereHeIs<<" Where is he? "<<endl;
+        this->map->pacman->walkForward(whereHeIs);
+    }
+
+    if(key == GLUT_KEY_DOWN)
+    {
+          char* whereHeIs = this->map->whereIsHe();
+        //  cout<<whereHeIs<<" Where is he? "<<endl;
+
+        this->map->pacman->walkBackward(whereHeIs);
+    }
+
+    if(key == GLUT_KEY_LEFT)
+    {
+     //   cout << "right " << endl;
+        this->map->pacman->turnLeft();
+    }
+
+    if(key == GLUT_KEY_RIGHT)
+    {
+       // cout << "left " << endl;
+        this->map->pacman->turnRight();
+    }
 
     /*  if(key == GLUT_KEY_UP)
       {

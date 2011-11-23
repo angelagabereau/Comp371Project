@@ -5,7 +5,7 @@
 1321138138 /home/angela/Documents/Comp371Project/Eight.h
 	"Sprite.h"
 
-1320635917 /home/angela/Documents/Comp371Project/Sprite.h
+1321929033 /home/angela/Documents/Comp371Project/Sprite.h
 	<GL/glut.h>
 	"SOIL/SOIL.h"
 	<iostream>
@@ -167,7 +167,7 @@
 1317765356 /usr/include/getopt.h
 	<ctype.h>
 
-1321237601 source:/home/angela/Documents/Comp371Project/EventListener.cpp
+1322055337 source:/home/angela/Documents/Comp371Project/EventListener.cpp
 	<cstdlib>
 	<math.h>
 	<iostream>
@@ -191,7 +191,7 @@
 	"EventListener.h"
 	"Map.h"
 
-1174767838 /home/angela/Documents/Comp371Project/glFrame.h
+1321924116 /home/angela/Documents/Comp371Project/glFrame.h
 	"math3d.h"
 
 1176928268 /home/angela/Documents/Comp371Project/math3d.h
@@ -215,7 +215,7 @@
 	"glFrame.h"
 	"Map.h"
 
-1321230181 /home/angela/Documents/Comp371Project/Map.h
+1322008583 /home/angela/Documents/Comp371Project/Map.h
 	<GL/glut.h>
 	"Pellet.h"
 	"Pacman.h"
@@ -230,7 +230,7 @@
 	<GL/glut.h>
 	"Sprite.h"
 
-1321193245 /home/angela/Documents/Comp371Project/Pacman.h
+1322008901 /home/angela/Documents/Comp371Project/Pacman.h
 	"Sprite.h"
 	"Eight.h"
 
@@ -244,13 +244,13 @@
 1321214482 /home/angela/Documents/Comp371Project/StreetLamp.h
 	"Sprite.h"
 
-1321224927 /home/angela/Documents/Comp371Project/Wall.h
+1322007529 /home/angela/Documents/Comp371Project/Wall.h
 	"Sprite.h"
 
-1321238311 source:/home/angela/Documents/Comp371Project/Ghost.cpp
+1321924116 source:/home/angela/Documents/Comp371Project/Ghost.cpp
 	"Ghost.h"
 
-1321238344 source:/home/angela/Documents/Comp371Project/Map.cpp
+1322055402 source:/home/angela/Documents/Comp371Project/Map.cpp
 	"Map.h"
 	<cstdlib>
 	<math.h>
@@ -261,8 +261,9 @@
 	<stdio.h>
 	"strstream"
 
-1321230357 source:/home/angela/Documents/Comp371Project/Pacman.cpp
+1322054904 source:/home/angela/Documents/Comp371Project/Pacman.cpp
 	<cstdlib>
+	<ctype.h>
 	<math.h>
 	<iostream>
 	<fstream>
@@ -271,16 +272,6 @@
 	<stdio.h>
 	"strstream"
 	<GL/glut.h>
-	<iostream>
-	<ctype.h>
-	<cstdlib>
-	<math.h>
-	<iostream>
-	<fstream>
-	<string>
-	<iomanip>
-	<stdio.h>
-	"strstream"
 	"glFrame.h"
 	"Pacman.h"
 	"Eight.h"
@@ -288,7 +279,7 @@
 1321220386 source:/home/angela/Documents/Comp371Project/Pellet.cpp
 	"Pellet.h"
 
-1320635854 source:/home/angela/Documents/Comp371Project/Sprite.cpp
+1321929010 source:/home/angela/Documents/Comp371Project/Sprite.cpp
 	"Sprite.h"
 
 1321232767 source:/home/angela/Documents/Comp371Project/StreetLamp.cpp
@@ -317,7 +308,7 @@
 	<getopt.h>
 	<bits/unistd.h>
 
-1321232001 source:/home/angela/Documents/Comp371Project/Wall.cpp
+1322007490 source:/home/angela/Documents/Comp371Project/Wall.cpp
 	"Wall.h"
 	<cstdlib>
 	<math.h>
