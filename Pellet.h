@@ -13,11 +13,14 @@ public:
     int loadTexture();
     void setTextureSwitch(GLint state);
     int getType();
+    GLint getHasBeenEaten();
+    GLint eat();
 protected:
     GLint textureSwitch;
     GLint colorFlag;
     GLint type;
     GLfloat size;
+    GLint hasBeenEaten;
 private:
 };
 

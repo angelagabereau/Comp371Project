@@ -19,11 +19,13 @@ public:
     GLfloat getX();
     GLfloat getY();
     GLfloat getZ();
+    GLfloat getRotation();
 protected:
     GLuint textureBank[3];
     GLint currentTextureIndex;
     GLint worldsEdgeX;
     GLint worldsEdgeZ;
+    GLint health;
 private:
     GLfloat rotation;
 };

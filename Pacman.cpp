@@ -52,82 +52,52 @@ void Pacman::turnRight()
         this->rotation=360;
     this->rotation=this->rotation-90;
 }
-void Pacman::walkForward(char* walls)
+void Pacman::walkForward(char* canMove)
 {
-
-    bool onTileX = round(this->x) == this->x && (round(this->x)  % 2 != 0);
-    bool onTileZ = round(this->z) == this->z && (round(this->z)  % 2 != 0);
-
-    cout<<"pacman x"<<this->x<<" on x: "<<onTileX<<endl;
-    cout<<"pacman z"<<this->z<<" on z: "<<onTileZ<<endl;
-
-
-
-    //First check which direction pacman is facing by checking pacman's rotation
-    //Then check if pacman is on a tile or on an edge.  x and z are whole numbers on tile edges and a float with .5 on the tile.
-    //Then check if there is a wall in front of pacman.  This is determined by the char in walls cooresponding to pacman's direction.
-
-    if(this->rotation == 0  && z<this->worldsEdgeZ) // facing south, make sure there is no wall
+    if(this->rotation == 0 && canMove[3]=='1') // facing south, make sure there is no wall
     {
-        if((onTileZ && walls[3]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
-            this->z+=0.5;
+            this->z++;
     }
-    else if(this->rotation == 90 && x>0)  // facing west
+    else if(this->rotation == 90 && canMove[0]=='1')  // facing east
     {
-        if((onTileX && walls[2]=='0') || !onTileX)//If we are on a tile, check there is no wall.
-            this->x-=0.5;
+            this->x++;
     }
-    else if(this->rotation == 180 && z>0)  //facing north
+    else if(this->rotation == 180 && canMove[1]=='1')  //facing north
     {
-        if((onTileZ && walls[1]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
-            this->z-=0.5;
+            this->z--;
     }
-    else if(this->rotation == 270 && x<this->worldsEdgeX)  //facing east
+    else if(this->rotation == 270 && canMove[2]=='1')  //facing west
     {
-        if((onTileX && walls[0]=='0') || !onTileX)//If we are on a tile, check there is no wall.
-            this->x+=0.5;
+            this->x--;
     }
     else
     {
-        cout << "Keep turning, you can only move forward at noon, 3, 6 and 9." << endl;
+      //  cout << "Ouch!  Watch it!" << endl;
     }
 }
 
-void Pacman::walkBackward(char* walls)
+void Pacman::walkBackward(char* canMove)
 {
-
-    bool onTileX = round(this->x) == this->x && (round(this->x)  % 2 != 0);
-    bool onTileZ = round(this->z) == this->z && (round(this->z)  % 2 != 0);
-
-    cout<<"pacman x"<<this->x<<" on x: "<<onTileX<<endl;
-    cout<<"pacman z"<<this->z<<" on z: "<<onTileZ<<endl;
-
-    if(this->rotation == 0 && z>0) // facing south  //Check world boundary. Do not move beyond.
+    if(this->rotation == 0 && canMove[1]=='1') // facing south  //Check north.
     {
-        if((onTileZ && walls[1]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
-            this->z-=0.5;
+            this->z--;
     }
-    else if(this->rotation == 90 && x<this->worldsEdgeX)  // facing west
+    else if(this->rotation == 90 && canMove[2]=='1')  // facing east, check behid-> west
     {
-        if((onTileX && walls[0]=='0') || !onTileX)//If we are on a tile, check there is no wall.
-            this->x+=0.5;
+            this->x--;
     }
-    else if(this->rotation == 180 && z<this->worldsEdgeZ)  //facing north
+    else if(this->rotation == 180 && canMove[3]=='1')  //facing north
     {
-        if((onTileZ && walls[3]=='0') || !onTileZ)//If we are on a tile, check there is no wall.
-            this->z+=0.5;
+            this->z++;
     }
-    else if(this->rotation == 270 && x>0)  //facing east
+    else if(this->rotation == 270 && canMove[0]=='1')  //facing west, check behind ->east
     {
-        if((onTileX && walls[2]=='0') || !onTileX)//If we are on a tile, check there is no wall.
-            this->x-=0.5;
-
+            this->x++;
     }
     else
     {
-        cout << "Keep turning, you can only move forward at noon, 3, 6 and 9." << endl;
+       // cout << "Ouch! Watch it!" << endl;
     }
-
 }
 
 
@@ -274,3 +244,8 @@ GLfloat Pacman::getZ()
     return this->z;
 }
 
+GLfloat Pacman::getRotation()
+{
+
+    return this->rotation;
+}

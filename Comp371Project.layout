@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Eight.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1776" topLine="56" />
+	</File>
+	<File name="EventListener.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="3795" topLine="123" />
+	</File>
+	<File name="Ghost.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="Map.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="1833" topLine="104" />
+	</File>
+	<File name="Map.h" open="1" top="0" tabpos="10">
+		<Cursor position="465" topLine="18" />
+	</File>
+	<File name="Pacman.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="1422" topLine="0" />
+	</File>
+	<File name="Pacman.h" open="1" top="0" tabpos="4">
+		<Cursor position="581" topLine="0" />
+	</File>
+	<File name="Sprite.cpp" open="1" top="0" tabpos="12">
+		<Cursor position="190" topLine="0" />
+	</File>
+	<File name="Sprite.h" open="1" top="0" tabpos="11">
+		<Cursor position="442" topLine="11" />
+	</File>
+	<File name="Wall.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="3041" topLine="111" />
+	</File>
+	<File name="Wall.h" open="1" top="0" tabpos="8">
+		<Cursor position="270" topLine="0" />
+	</File>
+	<File name="glFrame.h" open="1" top="0" tabpos="9">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="4" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

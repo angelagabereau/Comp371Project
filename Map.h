@@ -29,7 +29,9 @@ public:
     void switchAllTexture();
     void streetLightSwitch(GLint lightIndex);
     void masterStreetLightSwitch();
+    void gotPellet();
     char* whereIsHe();
+    char* whatDirectionsCanHeMove(float x, float z);
     Pacman *pacman;
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);
@@ -50,6 +52,9 @@ protected:
     GLint pelletsTextureState;
     GLint allTextureState;
     GLint masterStreetLightState;
+    GLint worldsEdgeX;
+    GLint worldsEdgeZ;
+    GLint score;
 private:
     char* tr(char x);
     void readstr(FILE *f,char *string);

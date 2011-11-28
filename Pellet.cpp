@@ -5,6 +5,7 @@ Pellet::Pellet( GLfloat xPos,GLfloat yPos,GLfloat zPos, GLint colorFlag, GLint t
     this->x=xPos;
     this->y=yPos;
     this->z=zPos;
+    this->hasBeenEaten=0;
 
     this->colorFlag = colorFlag;
     this->type = type;
@@ -20,8 +21,20 @@ Pellet::~Pellet()
     //dtor
 }
 
+GLint Pellet::getHasBeenEaten(){
+    return this->hasBeenEaten;
+}
+
+GLint Pellet::eat(){
+    this->hasBeenEaten=1;
+    return this->type;
+}
+
 void Pellet::draw()
 {
+    if(this->hasBeenEaten==1)
+        return;
+
     glPushMatrix();
 
     GLfloat yellow[] = { 1.0f, 1.0, 0.0, 1.0 };

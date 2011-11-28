@@ -29,7 +29,7 @@ Wall::Wall(GLfloat xPos,GLfloat yPos,GLfloat zPos, char* type)
 
     this->height = 0.5f;
     this->length = 1.0f;
-    this->width = 0.04f;
+    this->width = 0.2f;
 
     // cout<<xPos<<":"<<yPos<<":"<<zPos<<":"<<endl;
     //ctor

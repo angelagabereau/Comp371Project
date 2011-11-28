@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include "strstream"
+#include<bitset>
 
 
 using std::strstreambuf;
@@ -15,6 +16,7 @@ using std::istrstream;
 using std::ostrstream;
 using std::strstream;
 using std::fstream;
+using std::bitset;
 
 
 #define ESC 27
@@ -25,14 +27,17 @@ using namespace std;
 Map::Map()
 {
     //ctor
+    this->score = 0;
     this->xUnits = 28;
     this->zUnits = 28;
+    this->worldsEdgeX = 28*2;
+    this->worldsEdgeZ = 28*2;
     this->ghostUnits = 6;
     this->initPellets();
     this->initTiles();
     this->initGhosts();
 
-    this->pacman = new Pacman(2.0f,1.1f,2.0f);
+    this->pacman = new Pacman(27.0f,1.1f,27.0f);
 
     //Draw lights
     /*   this->streetLights[0] = new StreetLamp(GL_LIGHT1,0.0,4.0,0.0,4.0,0.0,4.0); //back left
@@ -68,12 +73,12 @@ void Map::draw()
         glEnable( GL_TEXTURE_2D );
     this->pacman->draw();
     this->drawTiles();
-//   this->drawStreetLights();
+    this->drawStreetLights();
 
-    //  this->drawGhosts();
+    this->drawGhosts();
 
-    //  this->drawPellets();
-     this->drawWalls();
+    this->drawPellets();
+    this->drawWalls();
 }
 
 void Map::streetLightSwitch(GLint lightIndex)
@@ -346,12 +351,174 @@ void Map::readstr(FILE *f,char *string)		// Read char from the file
     while ((string[0] == '/') || (string[0] == '\n'));
     return;
 }
-char* Map::whereIsHe(){
+char* Map::whereIsHe()
+{
 
     float x = this->pacman->getX();
     float z = this->pacman->getZ();
 
     return this->walls[(int)x/2][(int)z/2]->getType();
+}
+void Map::gotPellet(){
+
+    float x = this->pacman->getX();
+    float z = this->pacman->getZ();
+
+    bool onTileX = (int)round(x)  % 2;
+    bool onTileZ = (int)round(z)  % 2;
+
+    if(onTileX&&onTileZ){
+        GLint hasBeenEaten = this->pellets[(int)x/2][(int)z/2]->getHasBeenEaten();
+        if(hasBeenEaten==0){
+            GLint nutritionalValue = this->pellets[(int)x/2][(int)z/2]->eat();
+            this->score++;
+            cout<<"Yum Yum. I Love pellets.  Score: "<<this->score<<endl;
+            cout<<"Eaten: "<<hasBeenEaten<<" nutritional value = "<<nutritionalValue<<endl;
+            if(nutritionalValue==1){
+                cout<<"Power pellet time!"<<endl;
+            }
+        }
+    }
+
+
+    return;
+
+
+}
+
+char* Map::whatDirectionsCanHeMove(float x, float z)
+{
+
+    //Start with the assumption that the sprite can move in all directions
+    //and then take away directions.
+
+    //Represented with a 4 bit strig representing 4  direction, ENWS
+//    char canMove[] = "1111";
+    char* canMove = new char[4];
+    canMove[0] ='1';
+    canMove[1] ='1';
+    canMove[2] ='1';
+    canMove[3] ='1';
+
+    //  cout<<"---------**BEGIN----------"<<endl;
+//  cout<<"---------BEGIN----------"<<endl;
+    cout<<"---------BEGIN----------"<<endl;
+
+    int wallIndexX = (int)x/2;
+    int wallIndexZ = (int)z/2;
+
+    cout<<"X: "<<wallIndexX<<" Z: "<<wallIndexZ<<endl;
+
+    //ON THE SEAM, BETWEEN 2 TILES
+    //check even and odd. x and z.
+    bool onTileX = (int)round(x)  % 2;
+    bool onTileZ = (int)round(z)  % 2;
+
+    //cout<<"bwteen z "<<z<<" on z: "<<betweenTilesZ<<endl;
+    // cout<<"between x "<<x<<" on x: "<<betweenTilesX<<endl;
+    if(onTileZ==0)  //Can only move N S
+    {
+        canMove[0] = '0';
+        canMove[2] = '0';
+        cout<<canMove<<" is between tiles Z"<<endl;
+    }
+    else
+    {
+
+        //Can he move north.
+        if(wallIndexZ<=0) //on northern edge, cannot go further north
+        {
+            cout<<"north edge"<<endl;
+            canMove[1] = '0';
+        }
+        else
+        {
+            //Check current tile's N and the northern tile's S
+            char* northTileWallCode = this->walls[wallIndexX][wallIndexZ-1]->getType();
+            char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
+            if(currentTileWallCode[1]=='1' || northTileWallCode[3]=='1')
+                canMove[1]= '0';
+        }
+
+        //Can he move south.
+        if(wallIndexZ>=this->zUnits-1)//is on southern edge, cannot go further south
+        {
+            cout<<"south edge"<<endl;
+            canMove[3]= '0';
+        }
+        else
+        {
+            //Check current tile's S and the southern tile's N
+            char* southTileWallCode = this->walls[wallIndexX][wallIndexZ+1]->getType();
+            char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
+            if(currentTileWallCode[3]=='1' || southTileWallCode[1]=='1')
+                canMove[3]= '0';
+
+        }
+
+
+
+    }
+
+    // even on x plane means you can only move on the x plane , so no N S
+    if(onTileX==0)
+    {
+        canMove[1] = '0';
+        canMove[3] = '0';
+        cout<<canMove<<" is between tiles X"<<endl;
+    }
+    else
+    {
+
+        //Can he move east.
+        if(wallIndexX>=this->xUnits-1) //is on eastern edge, cannot go further east
+        {
+            cout<<x<<this->xUnits<<"east edge"<<endl;
+            canMove[0]= '0';
+        }
+        else
+        {
+            //Check current tile's E and the eastern tile's W
+            char* eastTileWallCode = this->walls[wallIndexX+1][wallIndexZ]->getType();
+            char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
+            if(currentTileWallCode[0]=='1' || eastTileWallCode[2]=='1')
+                canMove[0]= '0';
+        }
+
+
+        //Can he move west.
+        if(wallIndexX<=0) //is on western edge, cannot go further west
+        {
+            cout<<"west edge"<<endl;
+            canMove[2]= '0';
+        }
+        else
+        {
+            //Check current tile's W and the western tile's E
+            char* westTileWallCode = this->walls[wallIndexX-1][wallIndexZ]->getType();
+            char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
+            cout<<"west tile: "<<westTileWallCode<<" curretn: "<<currentTileWallCode<<endl;
+            if(currentTileWallCode[2]=='1' || westTileWallCode[0]=='1')
+                canMove[2]= '0';
+
+        }
+
+
+
+    }
+
+    //  char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
+    //    cout<<wallIndexX<<"  ||||   "<<this->xUnits<<"x units"<<endl;
+
+
+
+
+
+
+
+    cout<<canMove<<" bounds done"<<endl;
+
+    return canMove;
 }
 
 void Map::createMaze()
@@ -397,3 +564,5 @@ void Map::drawWalls()
     glPopMatrix();
 
 }
+
+
