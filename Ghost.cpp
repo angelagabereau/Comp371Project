@@ -92,3 +92,33 @@ int Ghost::loadTexture()
     return true;                                        // Return Success
 
 }
+void Ghost::moveDirection(int direction)
+{
+    if(direction==0)//east
+        this->x++;
+    if(direction==1)//north
+        this->z--;
+    if(direction==2)//west
+        this->x--;
+    if(direction==3)//south
+        this->z++;
+}
+
+GLfloat Ghost::getX()
+{
+
+    return this->x;
+}
+
+GLfloat Ghost::getY()
+{
+
+    return this->y;
+}
+
+GLfloat Ghost::getZ()
+{
+
+    return this->z;
+}
+

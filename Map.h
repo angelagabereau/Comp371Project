@@ -32,6 +32,7 @@ public:
     void gotPellet();
     char* whereIsHe();
     char* whatDirectionsCanHeMove(float x, float z);
+    void pacmanGhostCollisionDetection();
     Pacman *pacman;
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);

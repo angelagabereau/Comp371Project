@@ -4,15 +4,17 @@
 #include "Sprite.h"
 
 
-class Ghost : public Sprite
+class Ghost : Sprite
 {
 public:
     Ghost(GLfloat xPos,GLfloat yPos,GLfloat zPos);
     virtual ~Ghost();
     void draw();
     int loadTexture();
-protected:
-private:
+    GLfloat getX();
+    GLfloat getY();
+    GLfloat getZ();
+    void moveDirection(int direction);
 };
 
 #endif // GHOST_H

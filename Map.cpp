@@ -71,6 +71,10 @@ void Map::draw()
         glDisable( GL_TEXTURE_2D );
     else
         glEnable( GL_TEXTURE_2D );
+
+
+    this->pacmanGhostCollisionDetection();
+
     this->pacman->draw();
     this->drawTiles();
     this->drawStreetLights();
@@ -107,6 +111,17 @@ void Map::drawGhosts()
 {
     for(GLint i=0; i<this->ghostUnits; i++)
     {
+        //Where can the ghost move:
+        char* canMove = this->whatDirectionsCanHeMove(this->ghosts[i]->getX(), this->ghosts[i]->getZ());
+        cout<<"ghost num: "<<i<<" can move "<<canMove<<endl;
+
+        int direction = rand() % 4;
+        cout<<direction<<endl;
+
+        if(canMove[direction]=='1')//if he can move choosen direction, then move there!
+            this->ghosts[i]->moveDirection(direction);
+
+
         this->ghosts[i]->draw();
     }
 }
@@ -379,56 +394,57 @@ void Map::gotPellet(){
             }
         }
     }
-
-
     return;
+}
+
+void Map::pacmanGhostCollisionDetection(){
+
+
+    //Check if pacman is at the same place as ghosts are using brute force.
+    for(GLint i=0; i<this->ghostUnits; i++)
+    {
+        GLfloat ghostX = this->ghosts[i]->getX();
+        GLfloat ghostZ = this->ghosts[i]->getZ();
+
+    //    cout<<"ghost: "<<i<<" x: "<<ghostX<<" z: "<<ghostZ<<endl;
+    }
+
+
+return;
 
 
 }
 
 char* Map::whatDirectionsCanHeMove(float x, float z)
 {
-
     //Start with the assumption that the sprite can move in all directions
     //and then take away directions.
 
     //Represented with a 4 bit strig representing 4  direction, ENWS
-//    char canMove[] = "1111";
     char* canMove = new char[4];
     canMove[0] ='1';
     canMove[1] ='1';
     canMove[2] ='1';
     canMove[3] ='1';
 
-    //  cout<<"---------**BEGIN----------"<<endl;
-//  cout<<"---------BEGIN----------"<<endl;
-    cout<<"---------BEGIN----------"<<endl;
-
     int wallIndexX = (int)x/2;
     int wallIndexZ = (int)z/2;
-
-    cout<<"X: "<<wallIndexX<<" Z: "<<wallIndexZ<<endl;
 
     //ON THE SEAM, BETWEEN 2 TILES
     //check even and odd. x and z.
     bool onTileX = (int)round(x)  % 2;
     bool onTileZ = (int)round(z)  % 2;
 
-    //cout<<"bwteen z "<<z<<" on z: "<<betweenTilesZ<<endl;
-    // cout<<"between x "<<x<<" on x: "<<betweenTilesX<<endl;
     if(onTileZ==0)  //Can only move N S
     {
         canMove[0] = '0';
         canMove[2] = '0';
-        cout<<canMove<<" is between tiles Z"<<endl;
     }
     else
     {
-
         //Can he move north.
         if(wallIndexZ<=0) //on northern edge, cannot go further north
         {
-            cout<<"north edge"<<endl;
             canMove[1] = '0';
         }
         else
@@ -443,7 +459,6 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
         //Can he move south.
         if(wallIndexZ>=this->zUnits-1)//is on southern edge, cannot go further south
         {
-            cout<<"south edge"<<endl;
             canMove[3]= '0';
         }
         else
@@ -453,11 +468,7 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
             char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
             if(currentTileWallCode[3]=='1' || southTileWallCode[1]=='1')
                 canMove[3]= '0';
-
         }
-
-
-
     }
 
     // even on x plane means you can only move on the x plane , so no N S
@@ -465,7 +476,6 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
     {
         canMove[1] = '0';
         canMove[3] = '0';
-        cout<<canMove<<" is between tiles X"<<endl;
     }
     else
     {
@@ -473,7 +483,6 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
         //Can he move east.
         if(wallIndexX>=this->xUnits-1) //is on eastern edge, cannot go further east
         {
-            cout<<x<<this->xUnits<<"east edge"<<endl;
             canMove[0]= '0';
         }
         else
@@ -489,7 +498,6 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
         //Can he move west.
         if(wallIndexX<=0) //is on western edge, cannot go further west
         {
-            cout<<"west edge"<<endl;
             canMove[2]= '0';
         }
         else
@@ -497,27 +505,11 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
             //Check current tile's W and the western tile's E
             char* westTileWallCode = this->walls[wallIndexX-1][wallIndexZ]->getType();
             char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
-            cout<<"west tile: "<<westTileWallCode<<" curretn: "<<currentTileWallCode<<endl;
             if(currentTileWallCode[2]=='1' || westTileWallCode[0]=='1')
                 canMove[2]= '0';
 
         }
-
-
-
     }
-
-    //  char* currentTileWallCode = this->walls[wallIndexX][wallIndexZ]->getType();
-    //    cout<<wallIndexX<<"  ||||   "<<this->xUnits<<"x units"<<endl;
-
-
-
-
-
-
-
-    cout<<canMove<<" bounds done"<<endl;
-
     return canMove;
 }
 
