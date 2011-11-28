@@ -32,12 +32,12 @@ Map::Map()
     this->zUnits = 28;
     this->worldsEdgeX = 28*2;
     this->worldsEdgeZ = 28*2;
-    this->ghostUnits = 6;
+    this->ghostUnits = 6 ;
     this->initPellets();
     this->initTiles();
     this->initGhosts();
 
-    this->pacman = new Pacman(27.0f,1.1f,27.0f);
+    this->pacman = new Pacman(23.0f,1.1f,43.0f);
 
     //Draw lights
     /*   this->streetLights[0] = new StreetLamp(GL_LIGHT1,0.0,4.0,0.0,4.0,0.0,4.0); //back left
@@ -73,9 +73,31 @@ void Map::draw()
         glEnable( GL_TEXTURE_2D );
 
 
-    this->pacmanGhostCollisionDetection();
 
-    this->pacman->draw();
+    if(this->pacman->isAlive()==1)
+    {
+
+        char* canMove = this->whatDirectionsCanHeMove(this->pacman->getX(), this->pacman->getZ());
+        int moveSwitch = rand() % 4;
+
+        if(moveSwitch==0)//if he can move choosen direction, then move there!
+            this->pacman->walkForward(canMove);
+        else if(moveSwitch==1)
+            this->pacman->turnLeft();
+        else if (moveSwitch==2)
+            this->pacman->turnRight();
+        else if(moveSwitch==3)//if he can move choosen direction, then move there!
+            this->pacman->walkBackward(canMove);
+        this->pacmanGhostCollisionDetection();
+        this->gotPellet();
+
+        this->pacman->draw();
+
+        //If theere is an active power pellet, decrease it's life span.
+        if(this->pacman->hasPelletPower()==1)
+            this->pacman->decreasePelletPowerTime();
+
+    }
     this->drawTiles();
     this->drawStreetLights();
 
@@ -111,18 +133,23 @@ void Map::drawGhosts()
 {
     for(GLint i=0; i<this->ghostUnits; i++)
     {
-        //Where can the ghost move:
-        char* canMove = this->whatDirectionsCanHeMove(this->ghosts[i]->getX(), this->ghosts[i]->getZ());
-        cout<<"ghost num: "<<i<<" can move "<<canMove<<endl;
+        if(this->ghosts[i]->isAlive()==1)
+        {
+            //Where can the ghost move:
+            char* canMove = this->whatDirectionsCanHeMove(this->ghosts[i]->getX(), this->ghosts[i]->getZ());
+            //   cout<<"ghost num: "<<i<<" can move "<<canMove<<endl;
 
-        int direction = rand() % 4;
-        cout<<direction<<endl;
+            int moveSwitch = rand() % 3;
 
-        if(canMove[direction]=='1')//if he can move choosen direction, then move there!
-            this->ghosts[i]->moveDirection(direction);
+            if(moveSwitch==0)//if he can move choosen direction, then move there!
+                this->ghosts[i]->walkForward(canMove);
+            else if(moveSwitch==1)
+                this->ghosts[i]->turnLeft();
+            else if (moveSwitch==2)
+                this->ghosts[i]->turnRight();
 
-
-        this->ghosts[i]->draw();
+            this->ghosts[i]->draw();
+        }
     }
 }
 
@@ -374,7 +401,8 @@ char* Map::whereIsHe()
 
     return this->walls[(int)x/2][(int)z/2]->getType();
 }
-void Map::gotPellet(){
+void Map::gotPellet()
+{
 
     float x = this->pacman->getX();
     float z = this->pacman->getZ();
@@ -382,23 +410,33 @@ void Map::gotPellet(){
     bool onTileX = (int)round(x)  % 2;
     bool onTileZ = (int)round(z)  % 2;
 
-    if(onTileX&&onTileZ){
+    if(onTileX&&onTileZ)
+    {
         GLint hasBeenEaten = this->pellets[(int)x/2][(int)z/2]->getHasBeenEaten();
-        if(hasBeenEaten==0){
+        if(hasBeenEaten==0)
+        {
             GLint nutritionalValue = this->pellets[(int)x/2][(int)z/2]->eat();
-            this->score++;
-            cout<<"Yum Yum. I Love pellets.  Score: "<<this->score<<endl;
-            cout<<"Eaten: "<<hasBeenEaten<<" nutritional value = "<<nutritionalValue<<endl;
-            if(nutritionalValue==1){
+            if(this->pacman->hasPelletPower()==1) //Only score in power pellet mode.
+            {
+                this->score++;
+                cout<<"Yum Yum. I Love pellets.  Score: "<<this->score<<endl;
+                cout<<"Eaten: "<<hasBeenEaten<<" nutritional value = "<<nutritionalValue<<endl;
+            }
+            if(nutritionalValue==1)
+            {
                 cout<<"Power pellet time!"<<endl;
+                this->pacman->takePowerPellet();
             }
         }
     }
     return;
 }
 
-void Map::pacmanGhostCollisionDetection(){
+void Map::pacmanGhostCollisionDetection()
+{
 
+    GLfloat pacmanX = this->pacman->getX();
+    GLfloat pacmanZ = this->pacman->getZ();
 
     //Check if pacman is at the same place as ghosts are using brute force.
     for(GLint i=0; i<this->ghostUnits; i++)
@@ -406,11 +444,27 @@ void Map::pacmanGhostCollisionDetection(){
         GLfloat ghostX = this->ghosts[i]->getX();
         GLfloat ghostZ = this->ghosts[i]->getZ();
 
-    //    cout<<"ghost: "<<i<<" x: "<<ghostX<<" z: "<<ghostZ<<endl;
+
+        //    cout<<"ghost: "<<i<<" x: "<<ghostX<<" z: "<<ghostZ<<endl;
+        if(pacmanX==ghostX && pacmanZ==ghostZ && this->ghosts[i]->isAlive()==1)
+        {
+
+            if(this->pacman->hasPelletPower()==1)
+            {
+                cout<<"Destroy the ghost! Score: "<<this->score<<endl;
+                this->ghosts[i]->takeHit();
+
+            }
+            else
+            {
+                GLint health = this->pacman->takeHit();
+                cout<<"hit by ghost! Health: "<<health<<endl;
+            }
+        }
     }
 
 
-return;
+    return;
 
 
 }

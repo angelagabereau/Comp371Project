@@ -32,6 +32,9 @@ Pacman::Pacman( GLfloat xPos,GLfloat yPos,GLfloat zPos): Sprite()
     this->eight = new Eight(0.0f,0.3f,-2.0f);
     this->worldsEdgeX = 28*2;
     this->worldsEdgeZ = 28*2;
+    this->health = 100;
+    this->dead = 0;
+    this->pelletPower = 0;
 }
 
 Pacman::~Pacman()
@@ -100,6 +103,35 @@ void Pacman::walkBackward(char* canMove)
     }
 }
 
+GLint Pacman::takeHit(){
+
+    this->health = this->health-20;
+
+    if(this->health<=0){
+        cout<<"Pacman killed! GAME OVER!"<<endl;
+        this->dead = 1;
+    }
+
+    return this->health;
+}
+
+GLint Pacman::isAlive(){
+    return !this->dead;
+}
+GLint Pacman::takePowerPellet(){
+    this->pelletPower = 1;
+    this->pelletPowerTime = 100;
+}
+GLint Pacman::hasPelletPower(){
+    return this->pelletPower;
+}
+GLint Pacman::decreasePelletPowerTime(){
+    this->pelletPowerTime--;
+    if(this->pelletPowerTime==0){
+        cout<<"Power Pellet Time is up!  Defend yourself."<<endl;
+        this->pelletPower=0;
+    }
+}
 
 int Pacman::loadTexture()
 {
@@ -170,7 +202,10 @@ void Pacman::drawHalf(GLfloat r)
     glClipPlane (GL_CLIP_PLANE0, eqn);
     glEnable (GL_CLIP_PLANE0);
     glRotatef(180.0f, 1.0f, 0.0f,0.0f);//Flip sphere so we do not see texture seem.
-    glBindTexture(GL_TEXTURE_2D, this->textureBank[this->currentTextureIndex]);
+    if(this->pelletPower==1)//Power pellet mode
+        glBindTexture(GL_TEXTURE_2D, this->textureBank[1]);
+    else
+        glBindTexture(GL_TEXTURE_2D, this->textureBank[this->currentTextureIndex]);
     GLUquadricObj* p_poQuadric = gluNewQuadric();
     gluQuadricDrawStyle(p_poQuadric, GLU_FILL);
     gluQuadricNormals(p_poQuadric, GLU_SMOOTH);

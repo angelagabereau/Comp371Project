@@ -6,6 +6,8 @@ Ghost::Ghost( GLfloat xPos,GLfloat yPos,GLfloat zPos): Sprite()
     this->y=yPos;
     this->z=zPos;
     this->loadTexture();
+    this->dead = 0;
+    this->rotation=0.0;
 }
 
 Ghost::~Ghost()
@@ -92,6 +94,20 @@ int Ghost::loadTexture()
     return true;                                        // Return Success
 
 }
+void Ghost::turnLeft()
+{
+    this->rotation=this->rotation+90;
+    if(this->rotation==360)//scale back factor.
+        this->rotation=0;
+}
+void Ghost::turnRight()
+{
+    //If the roation is zero then set the rotation to 360 and subtract.
+    //This keeps the rotation value [0,360] and is used to calculate direction of movement.
+    if(this->rotation==0)
+        this->rotation=360;
+    this->rotation=this->rotation-90;
+}
 void Ghost::moveDirection(int direction)
 {
     if(direction==0)//east
@@ -102,6 +118,39 @@ void Ghost::moveDirection(int direction)
         this->x--;
     if(direction==3)//south
         this->z++;
+}
+
+void Ghost::walkForward(char* canMove)
+{
+    if(this->rotation == 0 && canMove[3]=='1') // facing south, make sure there is no wall
+    {
+            this->z++;
+    }
+    else if(this->rotation == 90 && canMove[0]=='1')  // facing east
+    {
+            this->x++;
+    }
+    else if(this->rotation == 180 && canMove[1]=='1')  //facing north
+    {
+            this->z--;
+    }
+    else if(this->rotation == 270 && canMove[2]=='1')  //facing west
+    {
+            this->x--;
+    }
+    else
+    {
+      //  cout << "Ouch!  Watch it!" << endl;
+    }
+}
+
+GLint Ghost::takeHit(){
+    this->dead = 1;
+    return this->dead;
+}
+
+GLint Ghost::isAlive(){
+    return !this->dead;
 }
 
 GLfloat Ghost::getX()

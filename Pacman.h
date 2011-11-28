@@ -20,12 +20,20 @@ public:
     GLfloat getY();
     GLfloat getZ();
     GLfloat getRotation();
+    GLint takeHit();
+    GLint isAlive();
+    GLint hasPelletPower();
+    GLint decreasePelletPowerTime();
+    GLint takePowerPellet();
 protected:
     GLuint textureBank[3];
     GLint currentTextureIndex;
     GLint worldsEdgeX;
     GLint worldsEdgeZ;
     GLint health;
+    GLint dead;
+    GLint pelletPower;
+    GLint pelletPowerTime;
 private:
     GLfloat rotation;
 };
