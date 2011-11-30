@@ -63,7 +63,7 @@ void EventListener::drawScene()
     glLoadIdentity();				// Reset The View
 
 //  glTranslatef(0.0f,-2.0f,-10.0f);
-    glTranslatef(-28.0f,40.0f,-40.0f);
+    glTranslatef(-28.0f,30.0f,-80.0f);
     //
     glRotatef(90.0,1.0, 0.0,0.0);
     this->map->drawAxis();
@@ -142,15 +142,16 @@ void EventListener::specialKeys(GLint key, GLint x, GLint y)
 
         char* canMove = this->map->whatDirectionsCanHeMove(this->map->pacman->getX(),this->map->pacman->getZ());
         this->map->pacman->walkForward(canMove);
-        cout<<canMove<<endl;
         this->map->gotPellet();
+        this->map->pacmanGhostCollisionDetection();
     }
 
     if(key == GLUT_KEY_DOWN)
     {
-       char*  canMove = this->map->whatDirectionsCanHeMove(this->map->pacman->getX(),this->map->pacman->getZ());
+        char*  canMove = this->map->whatDirectionsCanHeMove(this->map->pacman->getX(),this->map->pacman->getZ());
         this->map->pacman->walkBackward(canMove);
         this->map->gotPellet();
+        this->map->pacmanGhostCollisionDetection();
     }
 
     if(key == GLUT_KEY_LEFT)
@@ -300,6 +301,9 @@ void EventListener::keys (unsigned char thiskey, GLint x, GLint y)
         break;
     case 'x':
         this->map->pacman->switchTexture();
+        break;
+    case 'a':
+        this->map->autoplay = !this->map->autoplay;
         break;
     default:
         break;

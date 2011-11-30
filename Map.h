@@ -33,7 +33,9 @@ public:
     char* whereIsHe();
     char* whatDirectionsCanHeMove(float x, float z);
     void pacmanGhostCollisionDetection();
+    void newLevel();
     Pacman *pacman;
+    GLint autoplay;
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);
     void drawWalls();
@@ -47,6 +49,7 @@ protected:
     Ghost *ghost;
     GLFrame camera;
     char* mazeBlueprint[28][28];
+    char* mazeBlueprint2[28][28];
     GLint xUnits;
     GLint zUnits;
     GLint ghostUnits;
@@ -56,6 +59,7 @@ protected:
     GLint worldsEdgeX;
     GLint worldsEdgeZ;
     GLint score;
+    GLint level;
 private:
     char* tr(char x);
     void readstr(FILE *f,char *string);
