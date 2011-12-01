@@ -47,6 +47,7 @@ EventListener::EventListener(GLint width, GLint height)
     this->light2Switch = true;
     this->light3Switch = true;
     this->light4Switch = true;
+    this->fullScreenMode = false;
     this->map = new Map();
 }
 
@@ -105,6 +106,10 @@ void EventListener::initGL()	        // We call this right after our OpenGL wind
     glEnable(GL_LIGHT2);
     glEnable(GL_LIGHT3);
     glEnable(GL_LIGHT4);
+  /* Go fullscreen.  This is as soon as possible. */
+  //glutFullScreen();
+
+
 }
 // Display some useful remarks in the Xterm window.
 void EventListener::help ()
@@ -142,16 +147,17 @@ void EventListener::specialKeys(GLint key, GLint x, GLint y)
 
         char* canMove = this->map->whatDirectionsCanHeMove(this->map->pacman->getX(),this->map->pacman->getZ());
         this->map->pacman->walkForward(canMove);
-        this->map->gotPellet();
+
         this->map->pacmanGhostCollisionDetection();
+        this->map->gotPellet();
     }
 
     if(key == GLUT_KEY_DOWN)
     {
         char*  canMove = this->map->whatDirectionsCanHeMove(this->map->pacman->getX(),this->map->pacman->getZ());
         this->map->pacman->walkBackward(canMove);
-        this->map->gotPellet();
         this->map->pacmanGhostCollisionDetection();
+        this->map->gotPellet();
     }
 
     if(key == GLUT_KEY_LEFT)
@@ -304,6 +310,20 @@ void EventListener::keys (unsigned char thiskey, GLint x, GLint y)
         break;
     case 'a':
         this->map->autoplay = !this->map->autoplay;
+        break;
+    case '5':
+       this->fullScreenMode = !this->fullScreenMode;
+        if(this->fullScreenMode==1){
+            glutFullScreen();
+        }else{
+
+            glutPositionWindow(40,40);
+            glutReshapeWindow(this->width,this->height);
+            this->resizeScene();
+        }
+        break;
+    case '6':
+        this->map->newLevel();
         break;
     default:
         break;

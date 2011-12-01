@@ -106,6 +106,7 @@ void Pacman::walkBackward(char* canMove)
 GLint Pacman::takeHit(){
 
     this->health = this->health-20;
+    cout<<"Pacman hit! OUCH!"<<endl;
 
     if(this->health<=0){
         cout<<"Pacman killed! GAME OVER!"<<endl;

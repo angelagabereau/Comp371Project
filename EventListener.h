@@ -24,6 +24,7 @@ protected:
     bool light2Switch;
     bool light3Switch;
     bool light4Switch;
+    bool fullScreenMode;
     Map *map;
 private:
 };

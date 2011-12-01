@@ -19,7 +19,7 @@ public:
     void draw();
     void initPellets();
     void initTiles();
-    void initGhosts();
+    void initGhosts(GLfloat ghostData[][2]);
     void drawPellets();
     void drawAxis();
     void drawTiles();
@@ -39,6 +39,8 @@ public:
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);
     void drawWalls();
+    void initLevel1();
+    void initLevel2();
     Pellet *pellets[28][28];
     Tile *tiles[28][28];
     Ghost *ghosts[6];
