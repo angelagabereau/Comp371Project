@@ -36,9 +36,9 @@ public:
     void newLevel();
     Pacman *pacman;
     GLint autoplay;
-	StreetLamp *streetLights[4];
-	Ghost *ghosts[6];
-	GLFrame camera9;    // Camera that is rolled, pitched and yawed
+    StreetLamp *streetLights[4];
+    Ghost *ghosts[6];
+    GLFrame camera9;    // Camera that is rolled, pitched and yawed
 
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);

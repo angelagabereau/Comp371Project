@@ -27,18 +27,7 @@ void Eight::cube()
     glVertex3f(-1.0f,-1.0f, 0.0f);		// Bottom Left
     glEnd();					// done with the polygon
 
-}/*
-void Eight::cube()
-{
-    glBegin(GL_QUADS);				// start drawing a polygon (4 sided)
-    glNormal3f(0.0f,0.0f,1.0f);
-    glVertex3f(-1.0f,-1.0f, 0.0f);		// Bottom Left
-    glVertex3f( 1.0f,-1.0f, 0.0f);		// Bottom Right
-    glVertex3f( 1.0f, 1.0f, 0.0f);		// Top Right
-    glVertex3f(-1.0f, 1.0f, 0.0f);		// Top Left
-    glEnd();					// done with the polygon
 }
-*/
 void Eight::triangle()
 {
     glBegin(GL_POLYGON);				// start drawing a polygon
@@ -119,8 +108,8 @@ int Eight::loadTexture()
     // Load Bitmaps And Convert To Texture
     this->texture = SOIL_load_OGL_texture
                     (
-                      "/home/angela/Documents/Comp371Project/data/eight.bmp",
-                       // "data/eight.bmp",
+                        "data/eight.bmp",
+                        // "data/eight.bmp",
                         SOIL_LOAD_AUTO,
                         SOIL_CREATE_NEW_ID,
                         SOIL_FLAG_INVERT_Y

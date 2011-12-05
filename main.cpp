@@ -3,7 +3,6 @@
 #include <GL/glu.h>	// Header File For The GLu32 Library
 #include <stdio.h>      // Header file for standard file i/o.
 #include <stdlib.h>     // Header file for malloc/free.
-//#include <unistd.h>     // needed to sleep.
 #include "SOIL/SOIL.h"
 
 /* ascii code for the escape key */
@@ -46,12 +45,12 @@ void SpecialKeys (GLint key, GLint x, GLint y)
 
 void MouseFunc(int button, int state, int x, int y)
 {
-	eventListener->mouse->mouseFunc(button,state,x,y);
+    eventListener->mouse->mouseFunc(button,state,x,y);
 }
 
 void MouseMotion(int x, int y)
 {
-	eventListener->mouse->mouseMotion(x,y);
+    eventListener->mouse->mouseMotion(x,y);
 }
 
 int main(int argc, char **argv)
@@ -80,7 +79,7 @@ int main(int argc, char **argv)
     glutDisplayFunc(&DrawGLScene);
 
     /* Go fullscreen.  This is as soon as possible. */
-    //  glutFullScreen();
+    //glutFullScreen();
 
     /* Even if there are no events, redraw our gl scene. */
     glutIdleFunc(&DrawGLScene);
@@ -92,16 +91,16 @@ int main(int argc, char **argv)
     glutKeyboardFunc(&Keys);
     glutSpecialFunc(&SpecialKeys);
 
-	// Register the function called when the mouse is moved
-	glutMouseFunc(&MouseFunc);
-	glutMotionFunc(&MouseMotion);
+    // Register the function called when the mouse is moved
+    glutMouseFunc(&MouseFunc);
+    glutMotionFunc(&MouseMotion);
 
     eventListener = new EventListener(640,480);
 
     /* Initialize our window. */
     InitGL();
 
-	glEnable(GL_DEPTH_TEST); //enabling z-buffer
+    glEnable(GL_DEPTH_TEST); //enabling z-buffer
 
     /* Start Event Processing Engine */
     glutMainLoop();

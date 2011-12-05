@@ -24,11 +24,11 @@ public:
     virtual void draw() = 0;
     virtual void move();
     virtual int loadTexture()=0;
-	GLFrame camera;  //  GLFrame camera
+    GLFrame camera;  //  GLFrame camera
 protected:
     GLfloat ambient[4];
-	GLfloat diffuse[4];
-	 GLfloat specular[4];
+    GLfloat diffuse[4];
+    GLfloat specular[4];
     GLfloat shininess[1];
     float x, y, z;	// Object's position.
     GLuint texture;

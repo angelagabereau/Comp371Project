@@ -203,8 +203,8 @@ int StreetLamp::loadTexture()
     // Load Bitmaps And Convert To Texture
     this->texture = SOIL_load_OGL_texture
                     (
-                        "/home/angela/Documents/Comp371Project/data/scratchmetal.bmp",
-                        //"data/scratchmetal.bmp",
+                        //"/home/angela/Documents/Comp371Project/data/scratchmetal.bmp",
+                        "data/scratchmetal.bmp",
                         SOIL_LOAD_AUTO,
                         SOIL_CREATE_NEW_ID,
                         SOIL_FLAG_INVERT_Y
@@ -212,8 +212,8 @@ int StreetLamp::loadTexture()
 
     this->lightBulbTexture = SOIL_load_OGL_texture
                              (
-                                "/home/angela/Documents/Comp371Project/data/lightbulb.bmp",
-                                 //"data/lightbulb.bmp",
+                                 //"/home/angela/Documents/Comp371Project/data/lightbulb.bmp",
+                                 "data/lightbulb.bmp",
                                  SOIL_LOAD_AUTO,
                                  SOIL_CREATE_NEW_ID,
                                  SOIL_FLAG_INVERT_Y
@@ -226,7 +226,7 @@ int StreetLamp::loadTexture()
 
     // Typical Texture Generation Using Data From The Bitmap
     glBindTexture(GL_TEXTURE_2D, this->texture);
-//   glBindTexture(GL_TEXTURE_2D, this->lightBulbTexture);
+    glBindTexture(GL_TEXTURE_2D, this->lightBulbTexture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 

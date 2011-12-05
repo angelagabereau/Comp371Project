@@ -20,7 +20,7 @@ using std::bitset;
 
 
 #define ESC 27
-//#define M_PI 3.1415926
+#define M_PI 3.1415926
 
 using namespace std;
 
@@ -65,54 +65,54 @@ Map::~Map()
 
 void Map::initLevel1()
 {
-        cout<<"************Level 1***************"<<endl;
-        this->createMaze();///initialize new map;
-        this->initPellets();
+    cout<<"************Level 1***************"<<endl;
+    this->createMaze();//initialize new map;
+    this->initPellets();
 
-        GLfloat ghostData[this->ghostUnits][2];
-        ghostData[0][0] = 1.0;
-        ghostData[0][1] = 1.0;
-        ghostData[1][0] = 27.0;
-        ghostData[1][1] = 1.0;
-        ghostData[2][0] = 27.0;
-        ghostData[2][1] = 55.0;
-        ghostData[3][0] = 55.0;
-        ghostData[3][1] = 55.0;
-        ghostData[4][0] = 55.0;
-        ghostData[4][1] = 27.0;
-        ghostData[5][0] = 1.0;
-        ghostData[5][1] = 27.0;
+    GLfloat ghostData[this->ghostUnits][2];
+    ghostData[0][0] = 1.0;
+    ghostData[0][1] = 1.0;
+    ghostData[1][0] = 27.0;
+    ghostData[1][1] = 1.0;
+    ghostData[2][0] = 27.0;
+    ghostData[2][1] = 55.0;
+    ghostData[3][0] = 55.0;
+    ghostData[3][1] = 55.0;
+    ghostData[4][0] = 55.0;
+    ghostData[4][1] = 27.0;
+    ghostData[5][0] = 1.0;
+    ghostData[5][1] = 27.0;
 
-        this->initGhosts(ghostData);
-        this->pacman = new Pacman(1.0f,1.1f,1.0f);
-        this->createMaze();
+    this->initGhosts(ghostData);
+    this->pacman = new Pacman(1.0f,1.1f,1.0f);
+    this->createMaze();
 
     return;
 }
 
 void Map::initLevel2()
 {
-        cout<<"************LEVEL UP!! On to level 2***************"<<endl;
+    cout<<"************LEVEL UP!! On to level 2***************"<<endl;
 
-        this->initPellets();
+    this->initPellets();
 
-        GLfloat ghostData[this->ghostUnits][2];
-        ghostData[0][0] = 27.0;
-        ghostData[0][1] = 27.0;
-        ghostData[1][0] = 27.0;
-        ghostData[1][1] = 29.0;
-        ghostData[2][0] = 27.0;
-        ghostData[2][1] = 25.0;
-        ghostData[3][0] = 25.0;
-        ghostData[3][1] = 27.0;
-        ghostData[4][0] = 25.0;
-        ghostData[4][1] = 25.0;
-        ghostData[5][0] = 25.0;
-        ghostData[5][1] = 29.0;
+    GLfloat ghostData[this->ghostUnits][2];
+    ghostData[0][0] = 27.0;
+    ghostData[0][1] = 27.0;
+    ghostData[1][0] = 27.0;
+    ghostData[1][1] = 29.0;
+    ghostData[2][0] = 27.0;
+    ghostData[2][1] = 25.0;
+    ghostData[3][0] = 25.0;
+    ghostData[3][1] = 27.0;
+    ghostData[4][0] = 25.0;
+    ghostData[4][1] = 25.0;
+    ghostData[5][0] = 25.0;
+    ghostData[5][1] = 29.0;
 
-        this->initGhosts(ghostData);
-        this->pacman = new Pacman(27.0f,1.1f,55.0f);
-        this->createMaze();
+    this->initGhosts(ghostData);
+    this->pacman = new Pacman(27.0f,1.1f,55.0f);
+    this->createMaze();
 
     return;
 }
@@ -167,13 +167,17 @@ void Map::draw()
     this->drawWalls();
 }
 
-void Map::newLevel(){
-    if(this->level==1){
+void Map::newLevel()
+{
+    if(this->level==1)
+    {
         this->level++;
         this->initLevel2();
-    }else{
-         cout<<"************GAME COMPLETE!**************"<<endl;
-         cout<<"************FINAL SCORE: "<<this->score<<"**************"<<endl;
+    }
+    else
+    {
+        cout<<"************GAME COMPLETE!**************"<<endl;
+        cout<<"************FINAL SCORE: "<<this->score<<"**************"<<endl;
     }
 
 }
@@ -487,8 +491,7 @@ void Map::gotPellet()
             if(this->pacman->hasPelletPower()==1) //Only score in power pellet mode.
             {
                 this->score++;
-                cout<<"Yum Yum. I Love pellets.  Score: "<<this->score<<endl;
-                cout<<"Eaten: "<<hasBeenEaten<<" nutritional value = "<<nutritionalValue<<endl;
+                cout<<"Yum Yum. I Love pellets.  Nutritional value = "<<nutritionalValue<<"Score: "<<this->score<<endl;
             }
             if(nutritionalValue==1)
             {
@@ -639,11 +642,11 @@ void Map::createMaze()
 {
     string s;
     ifstream infile;
-    // infile.open("data/Maze.txt");
+
     if(this->level == 1)
-        infile.open("/home/angela/Documents/Comp371Project/data/Maze2.txt");
+        infile.open("data/Maze2.txt");
     if(this->level == 2)
-        infile.open("/home/angela/Documents/Comp371Project/data/Maze3.txt");
+        infile.open("data/Maze3.txt");
     int i = 0;
 
     if (infile.is_open())
@@ -653,7 +656,6 @@ void Map::createMaze()
             for (int j = 0; j < 28; j++)
             {
                 char* wallCode = tr(s[j]);
-                //  cout<<wallCode<<"MM"<<i<<":"<<j<<endl;
                 this->walls[i][j] = new Wall(i*2.0f,0.5f,j*2.0f, wallCode);
             }
             i++;
@@ -670,13 +672,11 @@ void Map::createMaze()
 void Map::drawWalls()
 {
     glPushMatrix();
-    // glTranslatef(17.5f,0.5f,8.9f);
-    for (int i = 0; i < 28; i++)		// Draw Walls For Every Square Unit
+    for (int i = 0; i < 28; i++)		// Draw Walls For Every Square Unit, every tile.
     {
         for (int j = 0; j < 28; j++)
         {
             this->walls[i][j]->draw();
-            //this->walls[0][0]->draw();
         }
     }
     glPopMatrix();

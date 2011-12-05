@@ -17,7 +17,7 @@ using std::fstream;
 
 
 #define ESC 27
-//#define M_PI 3.1415926
+#define M_PI 3.1415926
 
 using namespace std;
 
@@ -42,7 +42,8 @@ Wall::~Wall()
     //dtor
 }
 
-char* Wall::getType(){
+char* Wall::getType()
+{
     return this->type;
 }
 
@@ -127,7 +128,8 @@ void Wall::draw()
     glBindTexture(GL_TEXTURE_2D, this->texture);
 
     if (this->type[0] == '1')
-    {   //East wall, relative to tile
+    {
+        //East wall, relative to tile
         //x+2<--->z+2
         glPushMatrix();
         glTranslatef(2.0,0.0,1.0);
@@ -175,8 +177,8 @@ int Wall::loadTexture()
 
     texture = SOIL_load_OGL_texture
               (
-                "/home/angela/Documents/Comp371Project/data/metalwall.bmp",
-                 // "data/metalwall.bmp",
+                  //"/home/angela/Documents/Comp371Project/data/metalwall.bmp",
+                  "data/metalwall.bmp",
                   SOIL_LOAD_AUTO,
                   SOIL_CREATE_NEW_ID,
                   SOIL_FLAG_INVERT_Y

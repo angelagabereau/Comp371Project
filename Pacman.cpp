@@ -59,27 +59,27 @@ void Pacman::walkForward(char* canMove)
 {
     if(this->rotation == 0 && canMove[3]=='1') // facing south, make sure there is no wall
     {
-            this->z++;
-			this->camera.SetForwardVector(0.0,0.0,1.0);
+        this->z++;
+        this->camera.SetForwardVector(0.0,0.0,1.0);
     }
     else if(this->rotation == 90 && canMove[0]=='1')  // facing east
     {
-            this->x++;
-			this->camera.SetForwardVector(1.0,0.0,0.0);
+        this->x++;
+        this->camera.SetForwardVector(1.0,0.0,0.0);
     }
     else if(this->rotation == 180 && canMove[1]=='1')  //facing north
     {
-            this->z--;
-			this->camera.SetForwardVector(0.0,0.0,-1.0);
+        this->z--;
+        this->camera.SetForwardVector(0.0,0.0,-1.0);
     }
     else if(this->rotation == 270 && canMove[2]=='1')  //facing west
     {
-            this->x--;
-			this->camera.SetForwardVector(-1.0,0.0,0.0);
+        this->x--;
+        this->camera.SetForwardVector(-1.0,0.0,0.0);
     }
     else
     {
-      //  cout << "Ouch!  Watch it!" << endl;
+        //  cout << "Ouch!  Watch it!" << endl;
     }
 }
 
@@ -87,32 +87,34 @@ void Pacman::walkBackward(char* canMove)
 {
     if(this->rotation == 0 && canMove[1]=='1') // facing south  //Check north.
     {
-            this->z--;
+        this->z--;
     }
     else if(this->rotation == 90 && canMove[2]=='1')  // facing east, check behid-> west
     {
-            this->x--;
+        this->x--;
     }
     else if(this->rotation == 180 && canMove[3]=='1')  //facing north
     {
-            this->z++;
+        this->z++;
     }
     else if(this->rotation == 270 && canMove[0]=='1')  //facing west, check behind ->east
     {
-            this->x++;
+        this->x++;
     }
     else
     {
-       // cout << "Ouch! Watch it!" << endl;
+        // cout << "Ouch! Watch it!" << endl;
     }
 }
 
-GLint Pacman::takeHit(){
+GLint Pacman::takeHit()
+{
 
     this->health = this->health-20;
-     cout<<"Pacman hit! OUCH! Health: "<<this->health<<endl;
+    cout<<"Pacman hit! OUCH! Health: "<<this->health<<endl;
 
-    if(this->health<=0){
+    if(this->health<=0)
+    {
         cout<<"Pacman killed! GAME OVER!"<<endl;
         this->dead = 1;
     }
@@ -120,19 +122,24 @@ GLint Pacman::takeHit(){
     return this->health;
 }
 
-GLint Pacman::isAlive(){
+GLint Pacman::isAlive()
+{
     return !this->dead;
 }
-void Pacman::takePowerPellet(){
+void Pacman::takePowerPellet()
+{
     this->pelletPower = 1;
     this->pelletPowerTime = 100;
 }
-GLint Pacman::hasPelletPower(){
+GLint Pacman::hasPelletPower()
+{
     return this->pelletPower;
 }
-void Pacman::decreasePelletPowerTime(){
+void Pacman::decreasePelletPowerTime()
+{
     this->pelletPowerTime--;
-    if(this->pelletPowerTime==0){
+    if(this->pelletPowerTime==0)
+    {
         cout<<"Power Pellet Time is up!  Defend yourself."<<endl;
         this->pelletPower=0;
     }
@@ -143,8 +150,8 @@ int Pacman::loadTexture()
     // Load Bitmaps And Convert To Texture
     this->textureBank[0] = SOIL_load_OGL_texture
                            (
-                            "/home/angela/Documents/Comp371Project/data/pacman1.bmp",
-                             //  "data/pacman1.bmp",
+                               //  "/home/angela/Documents/Comp371Project/data/pacman1.bmp",
+                               "data/pacman1.bmp",
                                SOIL_LOAD_AUTO,
                                SOIL_CREATE_NEW_ID,
                                SOIL_FLAG_INVERT_Y
@@ -152,8 +159,8 @@ int Pacman::loadTexture()
 
     this->textureBank[1] = SOIL_load_OGL_texture
                            (
-                            "/home/angela/Documents/Comp371Project/data/pacman2.bmp",
-                              // "data/pacman2.bmp",
+                               //"/home/angela/Documents/Comp371Project/data/pacman2.bmp",
+                               "data/pacman2.bmp",
                                SOIL_LOAD_AUTO,
                                SOIL_CREATE_NEW_ID,
                                SOIL_FLAG_INVERT_Y
@@ -161,8 +168,8 @@ int Pacman::loadTexture()
 
     this->textureBank[2] = SOIL_load_OGL_texture
                            (
-                            "/home/angela/Documents/Comp371Project/data/pacman3.bmp",
-                              // "data/pacman3.bmp",
+                               //"/home/angela/Documents/Comp371Project/data/pacman3.bmp",
+                               "data/pacman3.bmp",
                                SOIL_LOAD_AUTO,
                                SOIL_CREATE_NEW_ID,
                                SOIL_FLAG_INVERT_Y
@@ -234,8 +241,6 @@ void Pacman::draw()
 
     move();
     glRotatef(this->rotation, 0.0f, 1.0f, 0.0f);
-    //cout << this->rotation << endl;
-    // glColor3f(1.0f,1.0f,1.0f);
 
     glPushMatrix(); //Top
     drawHalf(r);

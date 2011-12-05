@@ -21,11 +21,13 @@ Pellet::~Pellet()
     //dtor
 }
 
-GLint Pellet::getHasBeenEaten(){
+GLint Pellet::getHasBeenEaten()
+{
     return this->hasBeenEaten;
 }
 
-GLint Pellet::eat(){
+GLint Pellet::eat()
+{
     this->hasBeenEaten=1;
     return this->type;
 }
@@ -110,8 +112,8 @@ int Pellet::loadTexture()
     if(this->type==1)
     {
         texture = SOIL_load_OGL_texture
-                  (   "/home/angela/Documents/Comp371Project/data/pellet2.bmp",
-                     // "data/pellet2.bmp",
+                  (   //"/home/angela/Documents/Comp371Project/data/pellet2.bmp",
+                      "data/pellet2.bmp",
                       SOIL_LOAD_AUTO,
                       SOIL_CREATE_NEW_ID,
                       SOIL_FLAG_INVERT_Y
@@ -121,8 +123,8 @@ int Pellet::loadTexture()
     {
         texture = SOIL_load_OGL_texture
                   (
-                      "/home/angela/Documents/Comp371Project/data/pellet1.bmp",
-                      //"data/pellet1.bmp",
+                      //"/home/angela/Documents/Comp371Project/data/pellet1.bmp",
+                      "data/pellet1.bmp",
                       SOIL_LOAD_AUTO,
                       SOIL_CREATE_NEW_ID,
                       SOIL_FLAG_INVERT_Y

@@ -126,9 +126,6 @@ void EventListener::drawScene()
         break;
     }
 
-    //glTranslatef(-28.0f,40.0f,-40.0f);
-    //glRotatef(90.0,1.0, 0.0,0.0);
-
     this->map->drawAxis();
     this->map->draw();
 
@@ -146,18 +143,6 @@ void EventListener::initGL()	        // We call this right after our OpenGL wind
     glEnable(GL_DEPTH_TEST);			// Enables Depth Testing
     glShadeModel(GL_SMOOTH);			// Enables Smooth Color Shading
 
-    // glMatrixMode(GL_PROJECTION);
-    // glLoadIdentity();				// Reset The Projection Matrix
-
-    // gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f);	// Calculate The Aspect Ratio Of The Window
-    // gluPerspective(45.0, 1.5, 1.0, 20.0);
-    // glMatrixMode(GL_MODELVIEW);
-    // glLoadIdentity();
-
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable( GL_BLEND );
-    glClearColor(0.0,0.0,0.0,0.0);
-
     // Initialize the light.
     glEnable(GL_LIGHTING);
     //Ambient Light
@@ -168,6 +153,7 @@ void EventListener::initGL()	        // We call this right after our OpenGL wind
     glEnable(GL_LIGHT2);
     glEnable(GL_LIGHT3);
     glEnable(GL_LIGHT4);
+
 }
 
 // Display some useful remarks in the Xterm window.
@@ -188,7 +174,6 @@ void EventListener::help ()
     printf(" 4       light4 camera			 \n");
     printf(" 9       ghost camera			 \n");
     printf(" 0       pacman camera			 \n");
-    printf(" f       flat shading			 \n");
     printf(" d       day			         \n");
     printf(" n       night			         \n");
     printf(" u       lightpost 1			 \n");
@@ -202,6 +187,9 @@ void EventListener::help ()
     printf(" m       moving main camera by mouse   \n");
     printf(" [       zoom in by fovy		 \n");
     printf(" ]       zoom out by fovy		 \n");
+    printf(" a       autoplay		         \n");
+    printf(" 5       fullscreen		         \n");
+    printf(" 6       next level 	         \n");
 }
 
 void EventListener::specialKeys(GLint key, GLint x, GLint y)
@@ -241,8 +229,10 @@ void EventListener::resizeScene()
 {
     if (this->height==0)				// Prevent A Divide By Zero If The Window Is Too Small
         this->height=1;
-
-    glViewport(0, 0, this->width, this->height);		// Reset The Current Viewport And Perspective Transformation
+    if(!this->fullScreenMode)
+        glViewport(0, 0, this->width, this->height);		// Reset The Current Viewport And Perspective Transformation
+    else
+        glViewport(0, 0, 1000, 1000);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -394,6 +384,7 @@ void EventListener::keys (unsigned char thiskey, GLint x, GLint y)
         break;
     case 'a':
         this->map->autoplay = !this->map->autoplay;
+        break;
     case '5':
         this->fullScreenMode = !this->fullScreenMode;
         if(this->fullScreenMode==1)
@@ -402,9 +393,9 @@ void EventListener::keys (unsigned char thiskey, GLint x, GLint y)
         }
         else
         {
+            this->resizeScene();
             glutPositionWindow(40,40);
             glutReshapeWindow(this->width,this->height);
-            this->resizeScene();
         }
         break;
     case '6':

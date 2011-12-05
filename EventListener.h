@@ -18,7 +18,7 @@ public:
     void resizeScene();
     void drawScene();
     void initGL();
-	Mouse *mouse;
+    Mouse *mouse;
 protected:
     GLint height;
     GLint width;
@@ -29,14 +29,14 @@ protected:
     bool light4Switch;
     bool fullScreenMode;
     Map *map;
-	int cameraSwitch;
-	bool mouseSwitch;
-	bool zoomByFovy;
-	float yaw;
-	float roll;
-	float pitch;
-	float moveAngle;
-	float zoomMovingCamera;
+    int cameraSwitch;
+    bool mouseSwitch;
+    bool zoomByFovy;
+    float yaw;
+    float roll;
+    float pitch;
+    float moveAngle;
+    float zoomMovingCamera;
 private:
 };
 
