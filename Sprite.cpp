@@ -18,4 +18,3 @@ void Sprite::move()
     glTranslatef(x, y, z);
 }
 
-

@@ -4,7 +4,7 @@
 #include "Sprite.h"
 
 
-class Ghost : Sprite
+class Ghost : public Sprite
 {
 public:
     Ghost(GLfloat xPos,GLfloat yPos,GLfloat zPos);

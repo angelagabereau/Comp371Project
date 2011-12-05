@@ -36,6 +36,10 @@ public:
     void newLevel();
     Pacman *pacman;
     GLint autoplay;
+	StreetLamp *streetLights[4];
+	Ghost *ghosts[6];
+	GLFrame camera9;    // Camera that is rolled, pitched and yawed
+
 protected:
     void drawWall(GLfloat x, GLfloat y, char* val);
     void drawWalls();
@@ -43,13 +47,10 @@ protected:
     void initLevel2();
     Pellet *pellets[28][28];
     Tile *tiles[28][28];
-    Ghost *ghosts[6];
-    StreetLamp *streetLights[4];
     Wall *walls[28][28];
     Eight *eight;
     Tile *tile;
     Ghost *ghost;
-    GLFrame camera;
     char* mazeBlueprint[28][28];
     char* mazeBlueprint2[28][28];
     GLint xUnits;

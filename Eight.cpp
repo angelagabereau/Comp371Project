@@ -119,7 +119,8 @@ int Eight::loadTexture()
     // Load Bitmaps And Convert To Texture
     this->texture = SOIL_load_OGL_texture
                     (
-                        "/home/angela/Documents/Comp371Project/data/eight.bmp",
+                      "/home/angela/Documents/Comp371Project/data/eight.bmp",
+                       // "data/eight.bmp",
                         SOIL_LOAD_AUTO,
                         SOIL_CREATE_NEW_ID,
                         SOIL_FLAG_INVERT_Y

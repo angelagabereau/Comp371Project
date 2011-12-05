@@ -3,7 +3,7 @@
 #include <GL/glu.h>	// Header File For The GLu32 Library
 #include <stdio.h>      // Header file for standard file i/o.
 #include <stdlib.h>     // Header file for malloc/free.
-#include <unistd.h>     // needed to sleep.
+//#include <unistd.h>     // needed to sleep.
 #include "SOIL/SOIL.h"
 
 /* ascii code for the escape key */
@@ -44,6 +44,16 @@ void SpecialKeys (GLint key, GLint x, GLint y)
     eventListener->specialKeys(key,x,y);
 }
 
+void MouseFunc(int button, int state, int x, int y)
+{
+	eventListener->mouse->mouseFunc(button,state,x,y);
+}
+
+void MouseMotion(int x, int y)
+{
+	eventListener->mouse->mouseMotion(x,y);
+}
+
 int main(int argc, char **argv)
 {
     /* Initialize GLUT state - glut will take any command line arguments that pertain to it or
@@ -64,7 +74,7 @@ int main(int argc, char **argv)
     glutInitWindowPosition(0, 0);
 
     /* Open a window */
-    glutCreateWindow("Comp 361 - PA3 - Team 8 -  Press 'h' for instructions.");
+    glutCreateWindow("Comp 371 - Final Project - Team 8 -  Press 'h' for instructions.");
 
     /* Register the function to do all our OpenGL drawing. */
     glutDisplayFunc(&DrawGLScene);
@@ -80,13 +90,18 @@ int main(int argc, char **argv)
 
     /* Register the function called when the keyboard is pressed. */
     glutKeyboardFunc(&Keys);
-
     glutSpecialFunc(&SpecialKeys);
+
+	// Register the function called when the mouse is moved
+	glutMouseFunc(&MouseFunc);
+	glutMotionFunc(&MouseMotion);
 
     eventListener = new EventListener(640,480);
 
     /* Initialize our window. */
     InitGL();
+
+	glEnable(GL_DEPTH_TEST); //enabling z-buffer
 
     /* Start Event Processing Engine */
     glutMainLoop();

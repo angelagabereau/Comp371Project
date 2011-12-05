@@ -2,7 +2,7 @@
 #define PACMAN_H
 #include "Sprite.h"
 #include "Eight.h"
-class Pacman : Sprite
+class Pacman : public Sprite
 {
 public:
     Pacman(GLfloat xPos,GLfloat yPos,GLfloat zPos);
@@ -23,8 +23,8 @@ public:
     GLint takeHit();
     GLint isAlive();
     GLint hasPelletPower();
-    GLint decreasePelletPowerTime();
-    GLint takePowerPellet();
+    void decreasePelletPowerTime();
+    void takePowerPellet();
 protected:
     GLuint textureBank[3];
     GLint currentTextureIndex;

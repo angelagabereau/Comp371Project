@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <stdio.h>
 #include "strstream"
-#include<bitset>
+#include <bitset>
 
 
 using std::strstreambuf;
@@ -28,20 +28,17 @@ Map::Map()
 {
     //ctor
     this->score = 0;
-
     this->autoplay = 0;
     this->xUnits = 28;
     this->zUnits = 28;
     this->worldsEdgeX = 28*2;
     this->worldsEdgeZ = 28*2;
     this->ghostUnits = 6 ;
-  //  this->initPellets();
     this->initTiles();
-   // this->initGhosts();
+
     this->level = 1;
     this->initLevel1();
 
-  //  this->pacman = new Pacman(23.0f,1.1f,43.0f);
     //Draw lights
     this->streetLights[0] = new StreetLamp(GL_LIGHT1,0.0,4.0,0.0,4.0,0.0,4.0); //back left
     this->streetLights[1] = new StreetLamp(GL_LIGHT2,0.0,4.0,56.0,48.0,0.0,-48.0);//front left
@@ -54,6 +51,7 @@ Map::Map()
     this->pelletsTextureState = 1;
     this->masterStreetLightState = 1;
 
+    this->allTextureState = true;
 
 }
 
@@ -62,66 +60,8 @@ Map::~Map()
     //dtor
 }
 
-void Map::draw()
-{
-    camera.ApplyCameraTransform();
-    if(this->allTextureState)
-        glDisable( GL_TEXTURE_2D );
-    else
-        glEnable( GL_TEXTURE_2D );
 
 
-
-    if(this->pacman->isAlive()==1)
-    {
-
-        char* canMove = this->whatDirectionsCanHeMove(this->pacman->getX(), this->pacman->getZ());
-
-        if(this->autoplay==1) //Auto play mode. Pacman's random movement.
-        {
-            int moveSwitch = rand() % 4;
-
-            if(moveSwitch==0)//if he can move choosen direction, then move there!
-                this->pacman->walkForward(canMove);
-            else if(moveSwitch==1)
-                this->pacman->turnLeft();
-            else if (moveSwitch==2)
-                this->pacman->turnRight();
-            else if(moveSwitch==3)//if he can move choosen direction, then move there!
-                this->pacman->walkBackward(canMove);
-            this->pacmanGhostCollisionDetection();
-            this->gotPellet();
-        }
-        this->pacman->draw();
-
-        //If theere is an active power pellet, decrease it's life span.
-        if(this->pacman->hasPelletPower()==1)
-            this->pacman->decreasePelletPowerTime();
-
-    }
-    else
-    {
-        this->newLevel();
-    }
-
-    this->drawTiles();
-    this->drawStreetLights();
-    this->drawGhosts();
-    this->drawPellets();
-    this->drawWalls();
-
-}
-
-void Map::newLevel(){
-    if(this->level==1){
-        this->level++;
-        this->initLevel2();
-    }else{
-         cout<<"************GAME COMPLETE!**************"<<endl;
-         cout<<"************FINAL SCORE: "<<this->score<<"**************"<<endl;
-    }
-
-}
 
 void Map::initLevel1()
 {
@@ -144,7 +84,7 @@ void Map::initLevel1()
         ghostData[5][1] = 27.0;
 
         this->initGhosts(ghostData);
-        this->pacman = new Pacman(27.0f,1.1f,27.0f);
+        this->pacman = new Pacman(1.0f,1.1f,1.0f);
         this->createMaze();
 
     return;
@@ -176,7 +116,67 @@ void Map::initLevel2()
 
     return;
 }
+void Map::draw()
+{
 
+    if(this->allTextureState)
+        glEnable( GL_TEXTURE_2D );
+    else
+        glDisable( GL_TEXTURE_2D );
+
+    if(this->pacman->isAlive()==1)
+    {
+        this->pacman->camera.SetOrigin(this->pacman->getX(), this->pacman->getY()+1, this->pacman->getZ());
+        char* canMove = this->whatDirectionsCanHeMove(this->pacman->getX(), this->pacman->getZ());
+
+
+        if(this->autoplay==1) //Auto play mode. Pacman's random movement.
+        {
+            int moveSwitch = rand() % 4;
+
+            if(moveSwitch==0)//if he can move choosen direction, then move there!
+                this->pacman->walkForward(canMove);
+            else if(moveSwitch==1)
+                this->pacman->turnLeft();
+            else if (moveSwitch==2)
+                this->pacman->turnRight();
+            else if(moveSwitch==3)//if he can move choosen direction, then move there!
+                this->pacman->walkBackward(canMove);
+        }
+
+        this->pacmanGhostCollisionDetection();
+        this->gotPellet();
+
+        this->pacman->draw();
+
+        //If theere is an active power pellet, decrease it's life span.
+        if(this->pacman->hasPelletPower()==1)
+            this->pacman->decreasePelletPowerTime();
+
+    }
+    else
+    {
+        this->newLevel();
+    }
+    this->drawTiles();
+    this->drawStreetLights();
+
+    this->drawGhosts();
+
+    this->drawPellets();
+    this->drawWalls();
+}
+
+void Map::newLevel(){
+    if(this->level==1){
+        this->level++;
+        this->initLevel2();
+    }else{
+         cout<<"************GAME COMPLETE!**************"<<endl;
+         cout<<"************FINAL SCORE: "<<this->score<<"**************"<<endl;
+    }
+
+}
 void Map::streetLightSwitch(GLint lightIndex)
 {
     this->streetLights[lightIndex]->lightSwitch();
@@ -205,9 +205,9 @@ void Map::drawGhosts()
     {
         if(this->ghosts[i]->isAlive()==1)
         {
+            this->ghosts[i]->camera.SetOrigin(this->ghosts[i]->getX(), this->ghosts[i]->getY()+2.0, this->ghosts[i]->getZ());
             //Where can the ghost move:
             char* canMove = this->whatDirectionsCanHeMove(this->ghosts[i]->getX(), this->ghosts[i]->getZ());
-            //   cout<<"ghost num: "<<i<<" can move "<<canMove<<endl;
 
             int moveSwitch = rand() % 3;
 
@@ -270,6 +270,7 @@ void Map::drawAxis()
 
 void Map::initGhosts(GLfloat ghostData[][2])
 {
+
     for(GLint i=0; i<this->ghostUnits; i++)
     {
         this->ghosts[i] = new Ghost(ghostData[i][0], 0.1f, ghostData[i][1]);
@@ -369,7 +370,6 @@ void Map::switchAllTexture()
                 this->pellets[i][j]->setTextureSwitch(1);
             }
         }
-
     }
     else
     {
@@ -381,7 +381,7 @@ void Map::switchAllTexture()
             for(GLint j=0; j<this->zUnits; j++)
             {
                 //Turn off texture for all pellets
-                this->pellets[i][j]->setTextureSwitch(0 );
+                this->pellets[i][j]->setTextureSwitch(0);
             }
         }
     }
@@ -475,8 +475,8 @@ void Map::gotPellet()
     float x = this->pacman->getX();
     float z = this->pacman->getZ();
 
-    bool onTileX = (int)round(x)  % 2;
-    bool onTileZ = (int)round(z)  % 2;
+    bool onTileX = (int)ceil(x)  % 2;
+    bool onTileZ = (int)ceil(z)  % 2;
 
     if(onTileX&&onTileZ)
     {
@@ -554,8 +554,8 @@ char* Map::whatDirectionsCanHeMove(float x, float z)
 
     //ON THE SEAM, BETWEEN 2 TILES
     //check even and odd. x and z.
-    bool onTileX = (int)round(x)  % 2;
-    bool onTileZ = (int)round(z)  % 2;
+    bool onTileX = (int)ceil(x)  % 2;
+    bool onTileZ = (int)ceil(z)  % 2;
 
     if(onTileZ==0)  //Can only move N S
     {
@@ -639,11 +639,11 @@ void Map::createMaze()
 {
     string s;
     ifstream infile;
+    // infile.open("data/Maze.txt");
     if(this->level == 1)
         infile.open("/home/angela/Documents/Comp371Project/data/Maze2.txt");
     if(this->level == 2)
         infile.open("/home/angela/Documents/Comp371Project/data/Maze3.txt");
-
     int i = 0;
 
     if (infile.is_open())
@@ -682,5 +682,6 @@ void Map::drawWalls()
     glPopMatrix();
 
 }
+
 
 

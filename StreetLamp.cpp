@@ -204,6 +204,7 @@ int StreetLamp::loadTexture()
     this->texture = SOIL_load_OGL_texture
                     (
                         "/home/angela/Documents/Comp371Project/data/scratchmetal.bmp",
+                        //"data/scratchmetal.bmp",
                         SOIL_LOAD_AUTO,
                         SOIL_CREATE_NEW_ID,
                         SOIL_FLAG_INVERT_Y
@@ -211,7 +212,8 @@ int StreetLamp::loadTexture()
 
     this->lightBulbTexture = SOIL_load_OGL_texture
                              (
-                                 "/home/angela/Documents/Comp371Project/data/lightbulb.bmp",
+                                "/home/angela/Documents/Comp371Project/data/lightbulb.bmp",
+                                 //"data/lightbulb.bmp",
                                  SOIL_LOAD_AUTO,
                                  SOIL_CREATE_NEW_ID,
                                  SOIL_FLAG_INVERT_Y

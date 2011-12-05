@@ -4,6 +4,8 @@
 #include <GL/glut.h>
 #include "glFrame.h"
 #include "Map.h"
+#include "math3d.h"
+#include "Mouse.h"
 
 class EventListener
 {
@@ -16,6 +18,7 @@ public:
     void resizeScene();
     void drawScene();
     void initGL();
+	Mouse *mouse;
 protected:
     GLint height;
     GLint width;
@@ -26,6 +29,14 @@ protected:
     bool light4Switch;
     bool fullScreenMode;
     Map *map;
+	int cameraSwitch;
+	bool mouseSwitch;
+	bool zoomByFovy;
+	float yaw;
+	float roll;
+	float pitch;
+	float moveAngle;
+	float zoomMovingCamera;
 private:
 };
 

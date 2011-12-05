@@ -5,7 +5,7 @@ Tile::Tile( GLfloat xPos,GLfloat yPos,GLfloat zPos): Sprite()
     x=xPos;
     y=yPos;
     z=zPos;
-    eight = new Eight {0.0, 0.0, 0.0};
+    eight = new Eight(0.0, 0.0, 0.0);
     this->loadTexture();
 }
 
@@ -68,6 +68,7 @@ int Tile::loadTexture()
     this->texture = SOIL_load_OGL_texture
                     (
                         "/home/angela/Documents/Comp371Project/data/tilefloor.bmp",
+                        //"data/tilefloor.bmp",
                         SOIL_LOAD_AUTO,
                         SOIL_CREATE_NEW_ID,
                         SOIL_FLAG_INVERT_Y

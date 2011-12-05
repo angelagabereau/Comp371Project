@@ -75,6 +75,7 @@ int Ghost::loadTexture()
     this->texture = SOIL_load_OGL_texture
                     (
                         "/home/angela/Documents/Comp371Project/data/pellet.bmp",
+                       // "data/pellet.bmp",
                         SOIL_LOAD_AUTO,
                         SOIL_CREATE_NEW_ID,
                         SOIL_FLAG_INVERT_Y
@@ -125,18 +126,22 @@ void Ghost::walkForward(char* canMove)
     if(this->rotation == 0 && canMove[3]=='1') // facing south, make sure there is no wall
     {
             this->z++;
+			this->camera.SetForwardVector(0.0,0.0,1.0);
     }
     else if(this->rotation == 90 && canMove[0]=='1')  // facing east
     {
             this->x++;
+			this->camera.SetForwardVector(1.0,0.0,0.0);
     }
     else if(this->rotation == 180 && canMove[1]=='1')  //facing north
     {
             this->z--;
+			this->camera.SetForwardVector(0.0,0.0,-1.0);
     }
     else if(this->rotation == 270 && canMove[2]=='1')  //facing west
     {
             this->x--;
+			this->camera.SetForwardVector(-1.0,0.0,0.0);
     }
     else
     {
